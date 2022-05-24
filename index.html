@@ -7,9 +7,6 @@
     <title>Место</title>
   </head>
 
-
-
-
   <body>
     <div class="page">
 
@@ -26,7 +23,7 @@
             <div class="profile__info">
               <div class="profile__name-line">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button"></button>
+                <button class="profile__edit-button" type="button"></button>
               </div>
               <p class="profile__subtitle">Исследователь океана</p>
             </div>
@@ -90,15 +87,15 @@
       </footer>
 
 
-      <section class="popup">
+      <section class="popup popup_hidden">
         <form class="popup__container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <fieldset class="popup__info">
-            <input class="popup__input-text" type="text">
-            <input class="popup__input-text" type="text">
+            <input class="popup__input-text popup__name" type="text">
+            <input class="popup__input-text popup__profession" type="text">
           </fieldset>
-          <button class="popup__save-button">Сохранить</button>
-          <button class="popup__close-button"></button>
+          <button class="popup__save-button" type="submit">Сохранить</button>
+          <button class="popup__close-button" type="button"></button>
         </form>
       </section>
 
@@ -106,12 +103,7 @@
     </div>
 
 
-
-
-
-
-
-
+    <script src="script.js"></script>
   </body>
 
 </html>
