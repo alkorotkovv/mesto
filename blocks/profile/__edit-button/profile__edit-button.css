@@ -1,6 +1,7 @@
 .profile__edit-button {
   width: 24px;
   height: 24px;
+  margin-right: 19px;
   padding: 6px;
   object-fit: cover;
   border: 1px solid white;
