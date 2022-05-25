@@ -6,16 +6,9 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 950px) {
-  .profile__info {
-	}
-}
-
-
 @media (max-width: 767px) {
   .profile__info {
     max-width: 282px;
     align-items: center;
-
 	}
 }
