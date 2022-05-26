@@ -5,6 +5,12 @@
   border: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
+}
+
+@media (max-width: 600px) {
+  .popup__info {
+    gap: 23px;
+  }
 }
