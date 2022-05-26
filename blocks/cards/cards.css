@@ -5,7 +5,6 @@
   list-style-type: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, 1fr);
   gap: 20px 17px;
 }
 

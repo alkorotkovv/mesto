@@ -1,5 +1,6 @@
 .cards__description {
-  height: 79px;
+  width: 100%;
+  min-height: 79px;
   margin: 0;
   padding: 0 20px;
   box-sizing: border-box;

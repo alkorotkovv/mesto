@@ -1,5 +1,5 @@
 .cards__title {
-  max-width: 190px;
+  max-width: calc(100% - 50px);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,10 +10,4 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-@media (max-width: 950px) {
-  .cards__title {
-    min-width: 80%;
-	}
 }
