@@ -10,14 +10,14 @@ function openPopup() {
   let jobProfile = page.querySelector('.profile__subtitle');
   let nameInput = formElement.querySelector('.popup__name');
   let jobInput = formElement.querySelector('.popup__profession');
-  popup.classList.remove('popup_hidden');
+  popup.classList.add('popup_opened');
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
 };
 
 //функция закрытия попапа
 function closePopup() {
-  popup.classList.add('popup_hidden');
+  popup.classList.remove('popup_opened');
 };
 
 //слушатели для кнопок открыть\закрыть попап
