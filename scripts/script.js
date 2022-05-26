@@ -4,6 +4,7 @@ let formElement = popup.querySelector('.popup__container');
 let btnProfileEdit = page.querySelector('.profile__edit-button');
 let btnPopupClose = page.querySelector('.popup__close-button');
 
+//функция открытия попапа
 function openPopup() {
   let nameProfile = page.querySelector('.profile__title');
   let jobProfile = page.querySelector('.profile__subtitle');
@@ -14,14 +15,14 @@ function openPopup() {
   jobInput.value = jobProfile.textContent;
 };
 
+//функция закрытия попапа
 function closePopup() {
   popup.classList.add('popup_hidden');
 };
 
+//слушатели для кнопок открыть\закрыть попап
 btnProfileEdit.addEventListener('click', openPopup);
 btnPopupClose.addEventListener('click', closePopup);
-
-
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
