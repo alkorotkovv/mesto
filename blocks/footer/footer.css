@@ -10,22 +10,18 @@
   box-sizing: border-box;
 }
 
-
 @media (max-width: 950px) {
   .footer {
     padding-top: 48px;
     padding-left: 27px;
     padding-right: 27px;
     padding-bottom: 36px;
-
-
-	}
+  }
 }
 
 @media (max-width: 767px) {
   .footer {
     padding-left: 19px;
     padding-right: 19px;
-
-	}
+  }
 }
