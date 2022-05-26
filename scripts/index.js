@@ -6,8 +6,8 @@ let btnPopupClose = page.querySelector('.popup__close-button');
 
 let nameProfile = page.querySelector('.profile__title');
 let jobProfile = page.querySelector('.profile__subtitle');
-let nameInput = formElement.querySelector('.popup__name');
-let jobInput = formElement.querySelector('.popup__profession');
+let nameInput = formElement.querySelector('.popup__input_content_name');
+let jobInput = formElement.querySelector('.popup__input_content_job');
 
 //функция открытия попапа
 function openPopup() {

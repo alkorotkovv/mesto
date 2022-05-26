@@ -1,4 +1,4 @@
-.cards__like {
+.card__like {
   width: 22px;
   height: 19px;
   margin: 0;
@@ -10,7 +10,7 @@
   transition: opacity 0.2s linear;
 }
 
-.cards__like:hover {
+.card__like:hover {
   opacity: 0.5;
   cursor: pointer;
 }

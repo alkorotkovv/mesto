@@ -1,4 +1,4 @@
-.cards__item {
+.card {
   width: 282px;
   height: 361px;
   margin: 0;
@@ -8,9 +8,9 @@
 }
 
 @media (max-width: 950px) {
-  .cards__item {
+  .card {
     width: 100%;
     min-width: 250px;
     height: 100%;
-	}
+  }
 }

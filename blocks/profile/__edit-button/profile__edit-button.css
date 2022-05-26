@@ -7,7 +7,7 @@
   object-fit: cover;
   border: 1px solid white;
   background: none;
-  background-image: url(../../../images/edit.png);
+  background-image: url(../../../images/edit.svg);
   background-repeat: no-repeat;
   background-size: 10px 10px;
   background-position: center;
@@ -27,6 +27,5 @@
     padding: 4.25px;
     margin-top: 0;
     margin-right: 19px;
-
-	}
+  }
 }
