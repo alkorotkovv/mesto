@@ -4,12 +4,13 @@ let formElement = popup.querySelector('.popup__container');
 let btnProfileEdit = page.querySelector('.profile__edit-button');
 let btnPopupClose = page.querySelector('.popup__close-button');
 
+let nameProfile = page.querySelector('.profile__title');
+let jobProfile = page.querySelector('.profile__subtitle');
+let nameInput = formElement.querySelector('.popup__name');
+let jobInput = formElement.querySelector('.popup__profession');
+
 //функция открытия попапа
 function openPopup() {
-  let nameProfile = page.querySelector('.profile__title');
-  let jobProfile = page.querySelector('.profile__subtitle');
-  let nameInput = formElement.querySelector('.popup__name');
-  let jobInput = formElement.querySelector('.popup__profession');
   popup.classList.add('popup_opened');
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
@@ -28,10 +29,6 @@ btnPopupClose.addEventListener('click', closePopup);
 // она никуда отправляться не будет
 function formSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  let nameProfile = page.querySelector('.profile__title');
-  let jobProfile = page.querySelector('.profile__subtitle');
-  let nameInput = formElement.querySelector('.popup__name');
-  let jobInput = formElement.querySelector('.popup__profession');
   nameProfile.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
   closePopup();
