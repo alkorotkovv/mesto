@@ -1,6 +1,5 @@
 .card {
   width: 282px;
-  height: 361px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -11,6 +10,5 @@
   .card {
     width: 100%;
     min-width: 250px;
-    height: 100%;
   }
 }
