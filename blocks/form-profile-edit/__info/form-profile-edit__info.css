@@ -1,4 +1,4 @@
-.popup__info {
+.form-profile-edit__info {
   width: 100%;
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@
 }
 
 @media (max-width: 600px) {
-  .popup__info {
+  .form-profile-edit__info {
     gap: 23px;
   }
 }
