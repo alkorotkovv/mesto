@@ -7,8 +7,7 @@
     <title>Место</title>
   </head>
 
-  <body>
-    <div class="page">
+  <body class="page">
 
       <header class="header">
         <img class="header__logo" src="./images/logo.svg" alt="логотип"/>
@@ -22,56 +21,56 @@
             <div class="profile__info">
               <div class="profile__name-line">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button" type="button"></button>
+                <button class="profile__edit-button" type="button" aria-label="Edit"></button>
               </div>
               <p class="profile__subtitle">Исследователь океана</p>
             </div>
           </div>
-          <button class="profile__add-button"></button>
+          <button class="profile__add-button" type="button" aria-label="Add"></button>
         </section>
 
         <section class="elements">
-          <ul class="cards">
+          <ul class="elements__cards">
             <li class="card">
               <img class="card__image" src="./images/karachaevo.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Карачаевск</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/elbrus.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/dombay.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/elbrus.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/dombay.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
             <li class="card">
               <img class="card__image" src="./images/karachaevo.jpg" alt="фотография">
               <div class="card__description">
                 <h2 class="card__title">Карачаево-Черкесия</h2>
-                <button class="card__like"></button>
+                <button class="card__like" type="button" aria-label="Like"></button>
               </div>
             </li>
           </ul>
@@ -86,20 +85,17 @@
 
       <div class="popup">
         <div class="popup__container">
-          <form class="form-profile-edit">
+          <form class="form-profile-edit" name="form-profile-edit">
             <h2 class="form-profile-edit__title">Редактировать профиль</h2>
             <fieldset class="form-profile-edit__info">
-              <input class="form-profile-edit__input form-profile-edit__input_content_name" type="text">
-              <input class="form-profile-edit__input form-profile-edit__input_content_job" type="text">
+              <input class="form-profile-edit__input form-profile-edit__input_content_name" type="text" name="name" placeholder="Имя" required>
+              <input class="form-profile-edit__input form-profile-edit__input_content_job" type="text" name="job" placeholder="О себе" required>
             </fieldset>
             <button class="form-profile-edit__save-button" type="submit">Сохранить</button>
           </form>
-          <button class="popup__close-button" type="button"></button>
+          <button class="popup__close-button" type="button" aria-label="Close"></button>
         </div>
       </div>
-
-
-    </div>
 
 
     <script src="./scripts/index.js"></script>
