@@ -37,3 +37,62 @@ function formSubmitHandler (evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
+
+
+
+
+
+//Создание карточек
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+let cards = page.querySelector('.elements__cards');
+
+const cardsItem = document.createElement('li');
+cardsItem.classList.add('card');
+cards.append(cardsItem);
+
+const cardsItemImage = document.createElement('img');
+cardsItem.append(cardsItemImage);
+cardsItemImage.classList.add('card__image');
+cardsItemImage.src = 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg';
+cardsItemImage.alt = 'фотография';
+
+const cardsItemDescription = document.createElement('div');
+cardsItemDescription.classList.add('card__description');
+cardsItem.append(cardsItemDescription);
+
+const cardsItemTitle = document.createElement('h2');
+cardsItemDescription.append(cardsItemTitle);
+cardsItemTitle.classList.add('card__title');
+cardsItemTitle.textContent = "Название карточки";
+
+
+const cardsItemLike = document.createElement('button');
+cardsItemLike.classList.add('card__like');
+cardsItemDescription.append(cardsItemLike);
+
