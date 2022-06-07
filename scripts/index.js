@@ -43,6 +43,8 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 
 //Создание карточек
+let cards = page.querySelector('.elements__cards');
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -70,29 +72,45 @@ const initialCards = [
   }
 ];
 
-let cards = page.querySelector('.elements__cards');
+function createCard(i) {
+  const cardTemplate = document.querySelector('#cardTemplate').content;
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  cardElement.querySelector('.card__image').src = initialCards[i].link;
+  cardElement.querySelector('.card__title').textContent = initialCards[i].name;
+  cards.append(cardElement);
+}
 
-const cardsItem = document.createElement('li');
-cardsItem.classList.add('card');
-cards.append(cardsItem);
-
-const cardsItemImage = document.createElement('img');
-cardsItem.append(cardsItemImage);
-cardsItemImage.classList.add('card__image');
-cardsItemImage.src = 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg';
-cardsItemImage.alt = 'фотография';
-
-const cardsItemDescription = document.createElement('div');
-cardsItemDescription.classList.add('card__description');
-cardsItem.append(cardsItemDescription);
-
-const cardsItemTitle = document.createElement('h2');
-cardsItemDescription.append(cardsItemTitle);
-cardsItemTitle.classList.add('card__title');
-cardsItemTitle.textContent = "Название карточки";
+for (let i=0; i<initialCards.length; i+=1)
+{
+  createCard(i);
+}
 
 
-const cardsItemLike = document.createElement('button');
-cardsItemLike.classList.add('card__like');
-cardsItemDescription.append(cardsItemLike);
+/*
+for (let i=0; i<initialCards.length; i+=1)
+{
+  const cardsItem = document.createElement('li');
+  cardsItem.classList.add('card');
+  cards.append(cardsItem);
 
+  const cardsItemImage = document.createElement('img');
+  cardsItem.append(cardsItemImage);
+  cardsItemImage.classList.add('card__image');
+  cardsItemImage.src = initialCards[i].link;
+  cardsItemImage.alt = 'фотография';
+
+  const cardsItemDescription = document.createElement('div');
+  cardsItemDescription.classList.add('card__description');
+  cardsItem.append(cardsItemDescription);
+
+  const cardsItemTitle = document.createElement('h2');
+  cardsItemDescription.append(cardsItemTitle);
+  cardsItemTitle.classList.add('card__title');
+  cardsItemTitle.textContent = initialCards[i].name;
+
+
+  const cardsItemLike = document.createElement('button');
+  cardsItemLike.classList.add('card__like');
+  cardsItemDescription.append(cardsItemLike);
+};
+*/
