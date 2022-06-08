@@ -13,7 +13,7 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 767px) {
   .elements {
     padding-left: 19px;
     padding-right: 19px;

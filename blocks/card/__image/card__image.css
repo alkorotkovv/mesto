@@ -10,16 +10,30 @@
   cursor: pointer;
 }
 
-@media (min-width: 767px) and (max-width: 950px) {
+@media (max-width: 950px) {
   .card__image {
     width: 340px;
     height: 340px;
   }
 }
 
-@media (min-width: 424px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .card__image {
-    width: 380px;
-    height: 380px;
+    width: 282px;
+    height: 282px;
+  }
+}
+
+@media (max-width: 620px) {
+  .card__image {
+    width: 340px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 400px) {
+  .card__image {
+    width: 282px;
+    height: 282px;
   }
 }

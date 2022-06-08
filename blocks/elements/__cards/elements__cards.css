@@ -9,14 +9,26 @@
   justify-content: center;
 }
 
-@media (min-width: 767px) and (max-width: 950px) {
+@media (max-width: 950px) {
   .elements__cards {
     grid-template-columns: repeat(auto-fill, 340px);
   }
 }
 
-@media (min-width: 424px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .elements__cards {
-    grid-template-columns: repeat(auto-fill, 380px);
+    grid-template-columns: repeat(auto-fill, 282px);
+  }
+}
+
+@media (max-width: 620px) {
+  .elements__cards {
+    grid-template-columns: repeat(auto-fill, 340px);
+  }
+}
+
+@media (max-width: 400px) {
+  .elements__cards {
+    grid-template-columns: repeat(auto-fill, 282px);
   }
 }
