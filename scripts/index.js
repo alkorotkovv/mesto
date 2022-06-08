@@ -85,6 +85,10 @@ function createCard(i) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = initialCards[i].link;
   cardElement.querySelector('.card__title').textContent = initialCards[i].name;
+  const btnCardLike = cardElement.querySelector('.card__like');
+  btnCardLike.addEventListener('click', likeCard);
+  const btnCardDelete = cardElement.querySelector('.card__delete');
+  btnCardDelete.addEventListener('click', deleteCard);
   cards.prepend(cardElement);
 }
 
@@ -156,15 +160,15 @@ function formAddCardSubmitHandler (evt) {
 //Слушатель для кнопки Сохранить
 formCardAdd.addEventListener('submit', formAddCardSubmitHandler);
 
-//Лайки
-let btnsCardLike = page.querySelectorAll('.card__like');
-btnsCardLike.forEach((item) => {
-  console.log(item);
-  item.addEventListener('click', likeCard);
-});
 
+//Функция для лайков
 function likeCard(evt) {
-  const btnCardLike = evt.target; //ловим элемент кнопку закрытия попапа
-  //console.log(btnClosePopup);
+  const btnCardLike = evt.target; //ловим элемент кнопку лайка
   btnCardLike.closest('.card__like').classList.toggle('card__like_active');
+};
+
+//Функция для удаления карточки
+function deleteCard(evt) {
+  const btnCardDelete = evt.target; //ловим элемент кнопку удаления карточки
+  btnCardDelete.closest('.card').remove();
 };
