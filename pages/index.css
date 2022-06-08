@@ -42,3 +42,7 @@
 @import url(../blocks/form/__title/form__title.css);
 @import url(../blocks/form/__input/form__input.css);
 @import url(../blocks/form/__save-button/form__save-button.css);
+
+@import url(../blocks/card-scale/card-scale.css);
+@import url(../blocks/card-scale/__image/card-scale__image.css);
+@import url(../blocks/card-scale/__caption/card-scale__caption.css);
