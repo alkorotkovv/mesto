@@ -1,4 +1,4 @@
-let page = document.querySelector('.page');
+const page = document.querySelector('.page');
 
 let popupEdit = page.querySelector('.popup_edit');
 let formElement = popupEdit.querySelector('.form_profile_edit');
