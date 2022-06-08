@@ -89,6 +89,8 @@ function createCard(i) {
   btnCardLike.addEventListener('click', likeCard);
   const btnCardDelete = cardElement.querySelector('.card__delete');
   btnCardDelete.addEventListener('click', deleteCard);
+  const btnCardImage = cardElement.querySelector('.card__image');
+  btnCardImage.addEventListener('click', openPopupCard);
   cards.prepend(cardElement);
 }
 
@@ -171,4 +173,18 @@ function likeCard(evt) {
 function deleteCard(evt) {
   const btnCardDelete = evt.target; //ловим элемент кнопку удаления карточки
   btnCardDelete.closest('.card').remove();
+};
+
+
+let popupCard = page.querySelector('.popup_card');
+let popupCardImage = popupCard.querySelector('.card-scale__image');
+let popupCardCaption = popupCard.querySelector('.card-scale__caption');
+//Функция открытия попапа карточки
+function openPopupCard(evt) {
+  const btnCardImage = evt.target;
+  //console.log(btnCardImage.closest('.card__image').src);
+  //console.log(btnCardImage.nextElementSibling.firstElementChild.textContent);
+  popupCardImage.src = btnCardImage.closest('.card__image').src;
+  popupCardCaption.textContent = btnCardImage.nextElementSibling.firstElementChild.textContent;
+  popupCard.classList.add('popup_opened');
 };
