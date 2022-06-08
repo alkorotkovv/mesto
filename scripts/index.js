@@ -50,7 +50,7 @@ formElement.addEventListener('submit', formSubmitHandler);
 
 
 
-//Создание карточек
+//Создание карточек по умолчанию
 let cards = page.querySelector('.elements__cards');
 
 const initialCards = [
@@ -155,3 +155,16 @@ function formAddCardSubmitHandler (evt) {
 
 //Слушатель для кнопки Сохранить
 formCardAdd.addEventListener('submit', formAddCardSubmitHandler);
+
+//Лайки
+let btnsCardLike = page.querySelectorAll('.card__like');
+btnsCardLike.forEach((item) => {
+  console.log(item);
+  item.addEventListener('click', likeCard);
+});
+
+function likeCard(evt) {
+  const btnCardLike = evt.target; //ловим элемент кнопку закрытия попапа
+  //console.log(btnClosePopup);
+  btnCardLike.closest('.card__like').classList.toggle('card__like_active');
+};
