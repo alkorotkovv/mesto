@@ -1,4 +1,4 @@
-.form-profile-edit {
+.form {
   width: 100%;
   min-width: 430px;
   margin: 0;
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 600px) {
-  .form-profile-edit {
+  .form {
     min-width: 282px;
     padding: 25px 22px;
   }
