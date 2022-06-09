@@ -1,25 +1,25 @@
 //Блок объявления переменных
 const page = document.querySelector('.page');
 
-let popupEdit = page.querySelector('.popup_edit');
-let popupAdd = page.querySelector('.popup_add');
-let popupCard = page.querySelector('.popup_card');
+const popupEdit = page.querySelector('.popup_edit');
+const popupAdd = page.querySelector('.popup_add');
+const popupCard = page.querySelector('.popup_card');
 
-let formEdit = popupEdit.querySelector('.form_profile_edit');
-let formAdd = popupAdd.querySelector('.form_card_add');
-let btnProfileEdit = page.querySelector('.profile__edit-button');
-let btnProfileAdd = page.querySelector('.profile__add-button');
+const formEdit = popupEdit.querySelector('.form_profile_edit');
+const formAdd = popupAdd.querySelector('.form_card_add');
+const btnProfileEdit = page.querySelector('.profile__edit-button');
+const btnProfileAdd = page.querySelector('.profile__add-button');
 
-let nameProfile = page.querySelector('.profile__title');
-let jobProfile = page.querySelector('.profile__subtitle');
-let nameInput = formEdit.querySelector('.form__input_content_name');
-let jobInput = formEdit.querySelector('.form__input_content_job');
+const nameProfile = page.querySelector('.profile__title');
+const jobProfile = page.querySelector('.profile__subtitle');
+const nameInput = formEdit.querySelector('.form__input_content_name');
+const jobInput = formEdit.querySelector('.form__input_content_job');
 
-let placeInput = formAdd.querySelector('.form__input_content_place');
-let urlInput = formAdd.querySelector('.form__input_content_url');
+const placeInput = formAdd.querySelector('.form__input_content_place');
+const urlInput = formAdd.querySelector('.form__input_content_url');
 
-let popupCardImage = popupCard.querySelector('.card-scale__image');
-let popupCardCaption = popupCard.querySelector('.card-scale__caption');
+const popupCardImage = popupCard.querySelector('.card-scale__image');
+const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 
 
 
@@ -157,11 +157,6 @@ const initialCards = [
   }
 ];
 
-for (let i=0; i<initialCards.length; i+=1)
-{
-  createCard(i);
-}
-
 /*
 for (let i=0; i<initialCards.length; i+=1)
 {
@@ -190,3 +185,7 @@ for (let i=0; i<initialCards.length; i+=1)
   cardsItemDescription.append(cardsItemLike);
 };
 */
+for (let i=0; i<initialCards.length; i++)
+{
+  createCard(i);
+};
