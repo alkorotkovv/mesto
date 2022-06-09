@@ -82,6 +82,13 @@ function initCards() {
   }
 };
 
+/*
+function initCardss() {
+  initialCards.forEach((item, index) => {addCard(index);});
+};
+*/
+
+
 //Функция создания карточки на основе i-того элемента массива
 function createCard(i) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -124,8 +131,6 @@ function formAddSubmitHandler (evt) {
   closePopup(evt);
   formAdd.reset();  //Очищаем поля формы
 };
-
-
 
 
 
@@ -178,6 +183,19 @@ for (let i=0; i<initialCards.length; i+=1)
   cardsItemDescription.append(cardsItemLike);
 };
 */
+/*
+initialCards.forEach(function (item, index) {
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  cardElement.querySelector('.card__image').src = item.link;
+  cardElement.querySelector('.card__image').alt = 'фотография ' + (index+1);
+  cardElement.querySelector('.card__title').textContent = item.name;
+  console.log(cardElement);
+}
+);
+*/
+
 
 //Создаем карточки по умолчанию
 initCards();
+
+
