@@ -78,12 +78,11 @@ function deleteCard(evt) {
 function initCards() {
   for (let i=0; i<initialCards.length; i++)
   {
-    createCard(i);
-    insertCard(i);
+    addCard(i);
   }
 };
 
-//Функция создания карточки на основе данных из массива
+//Функция создания карточки на основе i-того элемента массива
 function createCard(i) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = initialCards[i].link;
@@ -97,15 +96,12 @@ function createCard(i) {
   btnCardImage.addEventListener('click', openPopupCard);
   //console.log(cardElement);
   return cardElement;
-}
-
-//Функция вставки карточки в начало списка
-function insertCard(i) {
-  cardsList.prepend(createCard(i));
 };
 
-
-
+//Функция добавления i-той карточки в начало списка
+function addCard(i) {
+  cardsList.prepend(createCard(i));
+};
 
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
@@ -124,8 +120,7 @@ function formAddSubmitHandler (evt) {
     link: urlInput.value
   });
   //console.log(initialCards);
-  createCard(0);  //создали карточку из 0ого элемента массива
-  insertCard(0);  //вставили эту же карточку
+  addCard(0);
   closePopup(evt);
   formAdd.reset();  //Очищаем поля формы
 };
