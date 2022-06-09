@@ -188,4 +188,4 @@ for (let i=0; i<initialCards.length; i+=1)
 for (let i=0; i<initialCards.length; i++)
 {
   createCard(i);
-};
+}
