@@ -2,5 +2,9 @@
   background-color: white;
   border: 1px solid grey;
   color: grey;
+}
 
+.form__save-button_disabled:hover {
+  opacity: 1;
+  cursor: default;
 }
