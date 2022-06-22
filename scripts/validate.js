@@ -11,22 +11,11 @@ function enableValidation(toValidateList) {
       form: formElement,
       inputList: Array.from(formElement.querySelectorAll(toValidateList.inputSelector)),
       inputErrorClass: toValidateList.inputErrorClass,
-      saveButton: Array.from(formElement.querySelectorAll(toValidateList.submitButtonSelector)),
+      saveButton: formElement.querySelector(toValidateList.submitButtonSelector),
       inactiveButtonClass: toValidateList.inactiveButtonClass,
       formErrorClass: toValidateList.errorClass
     };
 
-    /*
-    console.log('форма ' + index +'   ');
-    console.log(formElement);
-    console.log('инпуты формы ' + index +'   ');
-    console.log(form.inputList);
-    console.log('кнопка формы ' + index +'   ');
-    console.log(form.saveButton);
-    console.log('класс неактивной кнопки ' + index +'   ' + form.inactiveButtonClass);
-    console.log('класс ошибка инпута ' + index +'   ' + form.inputErrorClass);
-    console.log('класс ошибка формы ' + index +'   ' + form.formErrorClass);
-    */
     checkFormValidity(formObject);
     //console.log(form);
   });

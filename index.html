@@ -44,16 +44,16 @@
 
       <div class="popup popup_type_edit">
         <div class="popup__container">
-          <form class="form form_profile_edit" name="form_profile_edit">
+          <form class="form form_profile_edit" name="form_profile_edit" novalidate>
             <h2 class="form__title">Редактировать профиль</h2>
             <fieldset class="form__info">
               <label class="form__field">
                 <input class="form__input form__input_content_name" id="input-name" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
-                <span class="form__input-error input-name-error" >Текст должен быть не короче 2 симвТекст должен быть не короче 2 симвТекст должен быть не короче 2 симв</span>
+                <span class="form__input-error input-name-error" ></span>
               </label>
               <label class="form__field">
                 <input class="form__input form__input_content_job" id="input-job" type="text" name="job" placeholder="О себе" required minlength="2" maxlength="200">
-                <span class="form__input-error input-job-error" >Текст должен быть не короче 2 симв</span>
+                <span class="form__input-error input-job-error" ></span>
               </label>
             </fieldset>
             <button class="form__save-button" type="submit">Сохранить</button>
@@ -64,16 +64,16 @@
 
       <div class="popup popup_type_add">
         <div class="popup__container">
-          <form class="form form_card_add" name="form_card_add">
+          <form class="form form_card_add" name="form_card_add" novalidate>
             <h2 class="form__title">Новое место</h2>
             <fieldset class="form__info">
               <label class="form__field">
                 <input class="form__input form__input_content_place" type="text" name="place" placeholder="Название" required>
-                <span class="form__input-error input-place-error" >Текст должен быть не короче 2 симвТекст должен быть не короче 2 симвТекст должен быть не короче 2 симв</span>
+                <span class="form__input-error input-place-error" ></span>
               </label>
               <label class="form__field">
                 <input class="form__input form__input_content_url" type="text" name="url" placeholder="Ссылка на картинку" required>
-                <span class="form__input-error input-url-error" >Текст должен быть не короче 2 симвТекст должен быть не короче 2 симвТекст должен быть не короче 2 симв</span>
+                <span class="form__input-error input-url-error" ></span>
               </label>
             </fieldset>
             <button class="form__save-button" type="submit">Создать</button>
