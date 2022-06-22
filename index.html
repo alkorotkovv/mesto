@@ -47,8 +47,10 @@
           <form class="form form_profile_edit" name="form_profile_edit">
             <h2 class="form__title">Редактировать профиль</h2>
             <fieldset class="form__info">
-              <input class="form__input form__input_content_name" type="text" name="name" placeholder="Имя" required>
-              <input class="form__input form__input_content_job" type="text" name="job" placeholder="О себе" required>
+              <input class="form__input form__input_content_name" id="input-name" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
+              <span class="form__input-error input-name-error" ></span>
+              <input class="form__input form__input_content_job" id="input-job" type="text" name="job" placeholder="О себе" required minlength="2" maxlength="200">
+              <span class="form__input-error input-job-error" ></span>
             </fieldset>
             <button class="form__save-button" type="submit">Сохранить</button>
           </form>
@@ -96,6 +98,7 @@
 
     <script src="./scripts/initial-cards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 
 </html>
