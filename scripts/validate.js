@@ -3,9 +3,9 @@ function enableValidation(toValidateList) {
   const formList = Array.from(document.querySelectorAll(toValidateList.formSelector));
 
   formList.forEach((formElement, index) => {
-    formElement.addEventListener('submit', function () {
-      evt.preventDefault();
-    });
+    //formElement.addEventListener('submit', function () {
+      //evt.preventDefault();
+    //});
 
     const formObject = {
       form: formElement,
@@ -23,7 +23,11 @@ function enableValidation(toValidateList) {
 
 
 const checkFormValidity = (formObject) => {
-  //console.log('проверка валидности формы');
+  const saveButtonObject = {
+    saveButton: formObject.saveButton,
+    inactiveButtonClass: formObject.inactiveButtonClass
+  }
+  //console.log(saveButtonObject);
   formObject.inputList.forEach((inputElement, index) => {
 
     const inputObject = {
@@ -32,46 +36,56 @@ const checkFormValidity = (formObject) => {
       errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
     };
     //console.log('инпут ' + index +'   ');
-    console.log(inputObject);
+    //console.log(inputObject);
     inputElement.addEventListener('input', function () {
     checkInputValidity(inputObject);
+    toggleSaveButtonState(inputObject, saveButtonObject);
     });
   });
 };
 
+//Функция проверки инпута на валидность
+function isInputValid(inputObject) {
+  console.log(inputObject.input.value);
+  return (inputObject.input.validity.valid);
+}
 
+//Функция-реакция на валидность инпута
 const checkInputValidity = (inputObject) => {
-  console.log('проверка валидности инпутов');
-  if (!inputObject.input.validity.valid) {
-    //console.log(inputElement);
+  if (!isInputValid(inputObject)) {
     console.log('инпут не валидный');
     showInputError(inputObject);
   } else {
-    //console.log(inputElement);
     console.log('инпут валидный');
     hideInputError(inputObject);
   }
 };
 
-
+//Функция отображения ошибки при невалидном инпуте
 const showInputError = (inputObject) => {
-  //const inputElement = inputObject.input;
-  //const inputErrorClass = inputObject.inputErrorClass;
   inputObject.input.classList.add(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = inputObject.input.validationMessage;
   //errorElement.classList.add('form__input-error_active');
 };
 
+//Функция скрытия ошибки при валидном инпуте
 const hideInputError = (inputObject) => {
-  //const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputObject.input.classList.remove(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = '';
-  //errorElement.classList.remove('form__input-error_active');
-  //errorElement.textContent = '';
 };
 
 
-
+function toggleSaveButtonState(inputObject, saveButtonObject) {
+  console.log(saveButtonObject);
+  if (!isInputValid(inputObject)) {
+    saveButtonObject.saveButton.classList.add(saveButtonObject.inactiveButtonClass);
+    saveButtonObject.saveButton.disabled = true;
+  }
+  else {
+    saveButtonObject.saveButton.classList.remove(saveButtonObject.inactiveButtonClass);
+    saveButtonObject.saveButton.disabled = false;
+  }
+};
 
 
 
