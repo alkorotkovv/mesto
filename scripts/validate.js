@@ -3,9 +3,6 @@ function enableValidation(toValidateList) {
   const formList = Array.from(document.querySelectorAll(toValidateList.formSelector));
 
   formList.forEach((formElement, index) => {
-    //formElement.addEventListener('submit', function () {
-      //evt.preventDefault();
-    //});
 
     const formObject = {
       form: formElement,
