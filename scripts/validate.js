@@ -6,13 +6,16 @@ function enableValidation(toValidateList) {
     formElement.addEventListener('submit', function () {
       evt.preventDefault();
     });
-    const form = {
+
+    const formObject = {
+      form: formElement,
       inputList: Array.from(formElement.querySelectorAll(toValidateList.inputSelector)),
+      inputErrorClass: toValidateList.inputErrorClass,
       saveButton: Array.from(formElement.querySelectorAll(toValidateList.submitButtonSelector)),
       inactiveButtonClass: toValidateList.inactiveButtonClass,
-      inputErrorClass: toValidateList.inputErrorClass,
       formErrorClass: toValidateList.errorClass
     };
+
     /*
     console.log('форма ' + index +'   ');
     console.log(formElement);
@@ -24,48 +27,56 @@ function enableValidation(toValidateList) {
     console.log('класс ошибка инпута ' + index +'   ' + form.inputErrorClass);
     console.log('класс ошибка формы ' + index +'   ' + form.formErrorClass);
     */
-    checkFormValidity(form);
+    checkFormValidity(formObject);
+    //console.log(form);
   });
 };
 
 
-const checkFormValidity = (formElement) => {
+const checkFormValidity = (formObject) => {
   //console.log('проверка валидности формы');
-  formElement.inputList.forEach((inputElement, index) => {
-    const input = inputElement;
+  formObject.inputList.forEach((inputElement, index) => {
+
+    const inputObject = {
+      input: inputElement,
+      inputErrorClass: formObject.inputErrorClass,
+      errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
+    };
     //console.log('инпут ' + index +'   ');
-    //console.log(inputElement);
-    input.addEventListener('input', function () {
-      checkInputValidity(input);
+    console.log(inputObject);
+    inputElement.addEventListener('input', function () {
+    checkInputValidity(inputObject);
     });
   });
 };
 
 
-const checkInputValidity = (inputElement) => {
+const checkInputValidity = (inputObject) => {
   console.log('проверка валидности инпутов');
-  if (!inputElement.validity.valid) {
-    console.log(inputElement);
+  if (!inputObject.input.validity.valid) {
+    //console.log(inputElement);
     console.log('инпут не валидный');
-    showInputError(inputElement, inputElement.validationMessage);
+    showInputError(inputObject);
   } else {
-    console.log(inputElement);
+    //console.log(inputElement);
     console.log('инпут валидный');
-    hideInputError(inputElement, inputElement.validationMessage);
+    hideInputError(inputObject);
   }
 };
 
 
-const showInputError = (inputElement, errorMessage) => {
-  //const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__input_type_error');
-  //errorElement.textContent = errorMessage;
+const showInputError = (inputObject) => {
+  //const inputElement = inputObject.input;
+  //const inputErrorClass = inputObject.inputErrorClass;
+  inputObject.input.classList.add(inputObject.inputErrorClass);
+  inputObject.errorSpan.textContent = inputObject.input.validationMessage;
   //errorElement.classList.add('form__input-error_active');
 };
 
-const hideInputError = (inputElement, errorMessage) => {
+const hideInputError = (inputObject) => {
   //const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__input_type_error');
+  inputObject.input.classList.remove(inputObject.inputErrorClass);
+  inputObject.errorSpan.textContent = '';
   //errorElement.classList.remove('form__input-error_active');
   //errorElement.textContent = '';
 };

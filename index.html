@@ -47,10 +47,14 @@
           <form class="form form_profile_edit" name="form_profile_edit">
             <h2 class="form__title">Редактировать профиль</h2>
             <fieldset class="form__info">
-              <input class="form__input form__input_content_name" id="input-name" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
-              <span class="form__input-error input-name-error" ></span>
-              <input class="form__input form__input_content_job" id="input-job" type="text" name="job" placeholder="О себе" required minlength="2" maxlength="200">
-              <span class="form__input-error input-job-error" ></span>
+              <label class="form__field">
+                <input class="form__input form__input_content_name" id="input-name" type="text" name="name" placeholder="Имя" required minlength="2" maxlength="40">
+                <span class="form__input-error input-name-error" >Текст должен быть не короче 2 симв. Длина текста сейчас: 1 символ.Текст должен быть не короче 2 симв. Длина текста сейчас: 1 символ.</span>
+              </label>
+              <label class="form__field">
+                <input class="form__input form__input_content_job" id="input-job" type="text" name="job" placeholder="О себе" required minlength="2" maxlength="200">
+                <span class="form__input-error input-job-error" >Текст должен быть не короче 2 симв. Длина текста сейчас: 1 символ.Текст должен быть не короче 2 симв. Длина текста сейчас: 1 символ.</span>
+              </label>
             </fieldset>
             <button class="form__save-button" type="submit">Сохранить</button>
           </form>
