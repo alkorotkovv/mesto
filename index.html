@@ -67,8 +67,14 @@
           <form class="form form_card_add" name="form_card_add">
             <h2 class="form__title">Новое место</h2>
             <fieldset class="form__info">
-              <input class="form__input form__input_content_place" type="text" name="place" placeholder="Название" required>
-              <input class="form__input form__input_content_url" type="text" name="url" placeholder="Ссылка на картинку" required>
+              <label class="form__field">
+                <input class="form__input form__input_content_place" type="text" name="place" placeholder="Название" required>
+                <span class="form__input-error input-place-error" >Текст должен быть не короче 2 симвТекст должен быть не короче 2 симвТекст должен быть не короче 2 симв</span>
+              </label>
+              <label class="form__field">
+                <input class="form__input form__input_content_url" type="text" name="url" placeholder="Ссылка на картинку" required>
+                <span class="form__input-error input-url-error" >Текст должен быть не короче 2 симвТекст должен быть не короче 2 симвТекст должен быть не короче 2 симв</span>
+              </label>
             </fieldset>
             <button class="form__save-button" type="submit">Создать</button>
           </form>
