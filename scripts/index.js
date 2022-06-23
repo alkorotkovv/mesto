@@ -34,6 +34,8 @@ function openPopup(popupElement) {
 function openPopupEdit() {
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
+  nameInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
+  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
   openPopup(popupEdit);
 };
 
@@ -198,5 +200,3 @@ initialCards.forEach(function (item, index) {
 
 //Создаем карточки по умолчанию
 initCards();
-
-
