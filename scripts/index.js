@@ -78,6 +78,7 @@ function likeCard(evt) {
 function deleteCard(evt) {
   const btnCardDelete = evt.target; //ловим элемент кнопку удаления карточки
   btnCardDelete.closest('.card').remove();
+
 };
 
 //Функция создания карточек по умолчанию
