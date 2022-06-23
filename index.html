@@ -68,11 +68,11 @@
             <h2 class="form__title">Новое место</h2>
             <fieldset class="form__info">
               <label class="form__field">
-                <input class="form__input form__input_content_place" type="text" name="place" placeholder="Название" required>
+                <input class="form__input form__input_content_place" id="input-place" type="text" name="place" placeholder="Название" required minlength="2" maxlength="30">
                 <span class="form__input-error input-place-error" ></span>
               </label>
               <label class="form__field">
-                <input class="form__input form__input_content_url" type="text" name="url" placeholder="Ссылка на картинку" required>
+                <input class="form__input form__input_content_url" id="input-url" type="url" name="url" placeholder="Ссылка на картинку" required>
                 <span class="form__input-error input-url-error" ></span>
               </label>
             </fieldset>

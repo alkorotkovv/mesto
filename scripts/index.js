@@ -24,6 +24,7 @@ const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 const cardsList = page.querySelector('.elements__cards');
 const cardTemplate = page.querySelector('#cardTemplate').content;
 
+
 //Функция открытия попапа
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');

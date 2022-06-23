@@ -14,46 +14,55 @@ function enableValidation(toValidateList) {
     };
 
     checkFormValidity(formObject);
-    //console.log(form);
+    //console.log(formObject);
   });
 };
 
 
 const checkFormValidity = (formObject) => {
-  const saveButtonObject = {
-    saveButton: formObject.saveButton,
-    inactiveButtonClass: formObject.inactiveButtonClass
-  }
-  //console.log(saveButtonObject);
+
   formObject.inputList.forEach((inputElement, index) => {
 
+    //создадим объект инпута для удобства (передачи его как аргумента)
     const inputObject = {
       input: inputElement,
       inputErrorClass: formObject.inputErrorClass,
       errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
     };
-    //console.log('инпут ' + index +'   ');
     //console.log(inputObject);
+
+    //Проверяем для всех инпутов ПРЕДВАРИТЕЛЬНО корректность и активируем/деактивируем кнопку
+    //Поскольку при первом открытии
+
+    //добавляем слушатели на все инпуты по событию 'ввод'
     inputElement.addEventListener('input', function () {
-    checkInputValidity(inputObject);
-    toggleSaveButtonState(inputObject, saveButtonObject);
+      checkInputValidity(inputObject);
+      toggleSaveButtonState(formObject);
     });
   });
 };
 
-//Функция проверки инпута на валидность
+//Функция проверки существования невалидного инпута на всей форме
+function hasInvalidInput(formObject) {
+  return formObject.inputList.some((inputElement) => {
+  return !inputElement.validity.valid;
+});
+}
+
+//Функция проверки конкретного инпута на валидность
 function isInputValid(inputObject) {
-  console.log(inputObject.input.value);
+  //console.log(inputObject.input.value);
   return (inputObject.input.validity.valid);
 }
 
-//Функция-реакция на валидность инпута
+//Функция-реакция на валидность конкретного инпута
 const checkInputValidity = (inputObject) => {
+  //let count = 0;
   if (!isInputValid(inputObject)) {
-    console.log('инпут не валидный');
+    //console.log('инпут не валидный');
     showInputError(inputObject);
   } else {
-    console.log('инпут валидный');
+    //console.log('инпут валидный');
     hideInputError(inputObject);
   }
 };
@@ -71,16 +80,15 @@ const hideInputError = (inputObject) => {
   inputObject.errorSpan.textContent = '';
 };
 
-
-function toggleSaveButtonState(inputObject, saveButtonObject) {
-  console.log(saveButtonObject);
-  if (!isInputValid(inputObject)) {
-    saveButtonObject.saveButton.classList.add(saveButtonObject.inactiveButtonClass);
-    saveButtonObject.saveButton.disabled = true;
+//Функция активации/деактивации кнопки сохранить
+function toggleSaveButtonState(formObject) {
+  if (hasInvalidInput(formObject)) {
+    formObject.saveButton.classList.add(formObject.inactiveButtonClass);
+    formObject.saveButton.disabled = true;
   }
   else {
-    saveButtonObject.saveButton.classList.remove(saveButtonObject.inactiveButtonClass);
-    saveButtonObject.saveButton.disabled = false;
+    formObject.saveButton.classList.remove(formObject.inactiveButtonClass);
+    formObject.saveButton.disabled = false;
   }
 };
 
