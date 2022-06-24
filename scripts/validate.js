@@ -4,6 +4,7 @@ function enableValidation(toValidateList) {
 
   formList.forEach((formElement, index) => {
 
+    //создадим объект формы для удобства (передачи его как аргумента)
     const formObject = {
       form: formElement,
       inputList: Array.from(formElement.querySelectorAll(toValidateList.inputSelector)),
@@ -30,9 +31,6 @@ const checkFormValidity = (formObject) => {
       errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
     };
     //console.log(inputObject);
-
-    //Проверяем для всех инпутов ПРЕДВАРИТЕЛЬНО корректность и активируем/деактивируем кнопку
-    //Поскольку при первом открытии
 
     //добавляем слушатели на все инпуты по событию 'ввод'
     inputElement.addEventListener('input', function () {
@@ -71,7 +69,6 @@ const checkInputValidity = (inputObject) => {
 const showInputError = (inputObject) => {
   inputObject.input.classList.add(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = inputObject.input.validationMessage;
-  //errorElement.classList.add('form__input-error_active');
 };
 
 //Функция скрытия ошибки при валидном инпуте
