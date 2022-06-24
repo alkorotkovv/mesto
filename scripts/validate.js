@@ -40,29 +40,41 @@ const checkFormValidity = (formObject) => {
   });
 };
 
-//Функция проверки существования невалидного инпута на всей форме
-function hasInvalidInput(formObject) {
-  return formObject.inputList.some((inputElement) => {
-  return !inputElement.validity.valid;
-});
-}
-
-//Функция проверки конкретного инпута на валидность
-function isInputValid(inputObject) {
-  //console.log(inputObject.input.value);
-  return (inputObject.input.validity.valid);
-}
-
 //Функция-реакция на валидность конкретного инпута
 const checkInputValidity = (inputObject) => {
-  //let count = 0;
+
   if (!isInputValid(inputObject)) {
     //console.log('инпут не валидный');
     showInputError(inputObject);
   } else {
     //console.log('инпут валидный');
     hideInputError(inputObject);
+  };
+};
+
+//Функция активации/деактивации кнопки сохранить
+function toggleSaveButtonState(formObject) {
+  if (hasInvalidInput(formObject)) {
+    formObject.saveButton.classList.add(formObject.inactiveButtonClass);
+    formObject.saveButton.disabled = true;
   }
+  else {
+    formObject.saveButton.classList.remove(formObject.inactiveButtonClass);
+    formObject.saveButton.disabled = false;
+  };
+};
+
+//Функция проверки существования невалидного инпута на всей форме
+function hasInvalidInput(formObject) {
+  return formObject.inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+//Функция проверки конкретного инпута на валидность
+function isInputValid(inputObject) {
+  //console.log(inputObject.input.value);
+  return (inputObject.input.validity.valid);
 };
 
 //Функция отображения ошибки при невалидном инпуте
@@ -76,24 +88,6 @@ const hideInputError = (inputObject) => {
   inputObject.input.classList.remove(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = '';
 };
-
-//Функция активации/деактивации кнопки сохранить
-function toggleSaveButtonState(formObject) {
-  if (hasInvalidInput(formObject)) {
-    formObject.saveButton.classList.add(formObject.inactiveButtonClass);
-    formObject.saveButton.disabled = true;
-  }
-  else {
-    formObject.saveButton.classList.remove(formObject.inactiveButtonClass);
-    formObject.saveButton.disabled = false;
-  }
-};
-
-
-
-
-
-
 
 
 

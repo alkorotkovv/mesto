@@ -24,26 +24,40 @@ const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 const cardsList = page.querySelector('.elements__cards');
 const cardTemplate = page.querySelector('#cardTemplate').content;
 
-//Функция закрытия попапа на нажатие ESC
-function closePopupByKeyPress(evt) {
-  const openedPopup = getOpenedPopup();
-  if (evt.key === 'Escape') {
-    closePopup(openedPopup);
-  }
-}
 
-//Функция закрытия попапа на клик по оверлэю
-function closePopupByClick(evt) {
-  const openedPopup = getOpenedPopup();
-  if (evt.target.classList.contains('popup_opened'))
-    closePopup(openedPopup);
-}
+//Функция получения открытого попапа
+function getOpenedPopup() {
+  return page.querySelector('.popup_opened');
+  //return item.closest('.popup_opened');
+};
 
 //Функция открытия попапа
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupByKeyPress);
   document.addEventListener('click', closePopupByClick);
+};
+
+//Функция закрытия попапа
+function closePopup(popupElement) {
+  popupElement.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByKeyPress);
+  document.removeEventListener('click', closePopupByClick);
+};
+
+//Функция закрытия попапа на нажатие ESC
+function closePopupByKeyPress(evt) {
+  const openedPopup = getOpenedPopup();
+  if (evt.key === 'Escape') {
+    closePopup(openedPopup);
+  }
+};
+
+//Функция закрытия попапа на клик по оверлэю
+function closePopupByClick(evt) {
+  const openedPopup = getOpenedPopup();
+  if (evt.target.classList.contains('popup_opened'))
+    closePopup(openedPopup);
 };
 
 //Функция открытия попапа редактирования профиля
@@ -54,7 +68,6 @@ function openPopupEdit() {
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
   jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
-
   openPopup(popupEdit);
 };
 
@@ -70,13 +83,6 @@ function openPopupCard(evt) {
   popupCardImage.alt = 'попап ' + btnCardImage.closest('.card__image').alt;
   popupCardCaption.textContent = btnCardImage.nextElementSibling.firstElementChild.textContent;
   openPopup(popupCard);
-};
-
-//Функция закрытия любого попапа
-function closePopup(openedPopup) {
-  openedPopup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByKeyPress);
-  document.removeEventListener('click', closePopupByClick);
 };
 
 //Функция для лайков
@@ -119,11 +125,6 @@ function createCard(i) {
 function addCard(i) {
   cardsList.prepend(createCard(i));
 };
-
-function getOpenedPopup() {
-  return popupOpened = page.querySelector('.popup_opened');
-  //return item.closest('.popup_opened');
-}
 
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
