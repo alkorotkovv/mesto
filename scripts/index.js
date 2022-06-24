@@ -36,7 +36,6 @@ function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   popupElement.addEventListener('click', closePopupByClick);
   document.addEventListener('keydown', closePopupByKeyPress);
-
 };
 
 /*
