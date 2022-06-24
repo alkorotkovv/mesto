@@ -83,6 +83,8 @@ function openPopupEdit() {
 
 //Функция открытия попапа добавления карточки
 function openPopupAdd() {
+  //placeInput.dispatchEvent(new Event('input'));
+  //urlInput.dispatchEvent(new Event('input'));
   openPopup(popupAdd);
 };
 
@@ -143,6 +145,7 @@ function formEditSubmitHandler (evt) {
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
+  const btnAdd = evt.target.querySelector('.form__save-button');
   evt.preventDefault();
   const item = {
     name: placeInput.value,
@@ -152,6 +155,9 @@ function formAddSubmitHandler (evt) {
   addCard(item);
   closePopup();
   formAdd.reset();  //Очищаем поля формы
+  //делаем кнопку неактивной
+  btnAdd.classList.add('form__save-button_disabled');
+  btnAdd.disabled = true;
 };
 
 
