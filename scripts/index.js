@@ -24,67 +24,20 @@ const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 const cardsList = page.querySelector('.elements__cards');
 const cardTemplate = page.querySelector('#cardTemplate').content;
 
-
-//page.addEventListener('keydown', function (evt) {
-  //console.log(evt.key);
-  //console.log(evt.target);
-  //console.log(evt.currentTarget);
-/*
-  if (evt.key === 'Escape')
-  {
-    if (page.querySelector('.popup_opened')!==null)
-      {
-        const openedPopup = page.querySelector('.popup_opened').firstElementChild;
-        closePopup(evt);
-        console.log(openedPopup)
-      }
-    else
-      console.log('nulllll')
-    }
-  }
-);
-
-/*
-const popupsOpened = page.querySelectorAll('.popup');
-console.log(popupsOpened);
-popupsOpened.forEach((popup) => {
-  page.addEventListener('keydown', function (evt) {
-    console.log(evt.target);
-    ///const openedPopup = targetItem.closest('.popup_opened');
-  });
-
-
-});
-*/
-
-
+//Функция закрытия попапа на нажатие ESC
 function closePopupByKeyPress(evt) {
-  const popupOpened = page.querySelector('.popup_opened');
-  console.log(popupOpened);
+  const openedPopup = getOpenedPopup();
   if (evt.key === 'Escape') {
-    closePopup(popupOpened);
+    closePopup(openedPopup);
   }
 }
 
+//Функция закрытия попапа на клик по оверлэю
 function closePopupByClick(evt) {
-  const popupOpened = page.querySelector('.popup_opened');
-  //console.log(evt.target);
-  //console.log(evt.target.classList);
-  const classes = Array.from(evt.target.classList);
-  //console.log(classes);
-  if (classes.includes('popup_opened'))
-    closePopup(popupOpened);
+  const openedPopup = getOpenedPopup();
+  if (evt.target.classList.contains('popup_opened'))
+    closePopup(openedPopup);
 }
-
-//Функция открытия попапа
-/*
-function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', function(evt) {
-    closePopupByAction(evt, popupElement);
-  })
-};
-*/
 
 //Функция открытия попапа
 function openPopup(popupElement) {
@@ -113,8 +66,6 @@ function openPopupAdd() {
 //Функция открытия попапа карточки
 function openPopupCard(evt) {
   const btnCardImage = evt.target;
-  //console.log(btnCardImage.closest('.card__image').src);
-  //console.log(btnCardImage.nextElementSibling.firstElementChild.textContent);
   popupCardImage.src = btnCardImage.closest('.card__image').src;
   popupCardImage.alt = 'попап ' + btnCardImage.closest('.card__image').alt;
   popupCardCaption.textContent = btnCardImage.nextElementSibling.firstElementChild.textContent;
@@ -131,7 +82,6 @@ function closePopup(openedPopup) {
 //Функция для лайков
 function likeCard(evt) {
   const btnCardLike = evt.target; //ловим элемент кнопку лайка
-  //console.log(btnCardLike);
   btnCardLike.classList.toggle('card__like_active');
 };
 
@@ -170,13 +120,14 @@ function addCard(i) {
   cardsList.prepend(createCard(i));
 };
 
-function findClosestOpenedPopup(item) {
-  return item.closest('.popup_opened');
+function getOpenedPopup() {
+  return popupOpened = page.querySelector('.popup_opened');
+  //return item.closest('.popup_opened');
 }
 
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
-  const openedPopup = findClosestOpenedPopup(evt.target);
+  const openedPopup = getOpenedPopup();
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
   nameProfile.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
@@ -185,7 +136,7 @@ function formEditSubmitHandler (evt) {
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
-  const openedPopup = findClosestOpenedPopup(evt.target);
+  const openedPopup = getOpenedPopup();
   evt.preventDefault();
   initialCards.unshift( //Вставляем в начало массива данные из формы
   {
@@ -210,7 +161,7 @@ btnProfileAdd.addEventListener('click', openPopupAdd);
 const btnsClosePopup = page.querySelectorAll('.popup__close-button');
 btnsClosePopup.forEach((item) => {
   item.addEventListener('click', function() {
-    const openedPopup = findClosestOpenedPopup(item);
+    const openedPopup = getOpenedPopup();
     closePopup(openedPopup);
   });
 });
