@@ -34,8 +34,9 @@ function getOpenedPopup() {
 //Функция открытия попапа
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
+  popupElement.addEventListener('click', closePopupByClick);
   document.addEventListener('keydown', closePopupByKeyPress);
-  document.addEventListener('click', closePopupByClick);
+
 };
 
 /*
@@ -50,11 +51,10 @@ function closePopup(popupElement) {
 //Функция закрытия попапа (поскольку активным может быть только один, аргумент можно не передавать)
 function closePopup() {
   const openedPopup = getOpenedPopup();
-  openedPopup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupByKeyPress);
   document.removeEventListener('click', closePopupByClick);
+  openedPopup.classList.remove('popup_opened');
 };
-
 
 //Функция закрытия попапа на нажатие ESC
 function closePopupByKeyPress(evt) {
@@ -74,6 +74,17 @@ function closePopupByClick(evt) {
 function openPopupEdit() {
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
+  /*
+  const inputObject = {
+    input: nameInput,
+    inputErrorClass: 'form__input_type_error',
+    errorSpan: formEdit.querySelector(`.input-name-error`)
+  };
+  hideInputError(inputObject);
+  */
+
+  //Потыкался но так и не понял как это сделать в соответствии с вашим комментарием "можно лучше". Если опишете более подробно буду очень благодарен)
+
   nameInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
   jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
@@ -83,8 +94,6 @@ function openPopupEdit() {
 
 //Функция открытия попапа добавления карточки
 function openPopupAdd() {
-  //placeInput.dispatchEvent(new Event('input'));
-  //urlInput.dispatchEvent(new Event('input'));
   openPopup(popupAdd);
 };
 
