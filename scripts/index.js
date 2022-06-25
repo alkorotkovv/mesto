@@ -119,15 +119,15 @@ function deleteCard(evt) {
 
 //Функция инициализации первых 6ти карточек
 function initCards() {
-  initialCards.forEach((item) => {addCard(item)});
+  initialCards.forEach((cardData) => {addCard(cardData)});
 };
 
 //Функция создания карточки на основе i-того элемента массива
-function createCard(item) {
+function createCard(cardData) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  cardElement.querySelector('.card__image').src = item.link;
-  cardElement.querySelector('.card__image').alt = 'фотография ' + item.name;
-  cardElement.querySelector('.card__title').textContent = item.name;
+  cardElement.querySelector('.card__image').src = cardData.link;
+  cardElement.querySelector('.card__image').alt = 'фотография ' + cardData.name;
+  cardElement.querySelector('.card__title').textContent = cardData.name;
   const btnCardLike = cardElement.querySelector('.card__like');
   btnCardLike.addEventListener('click', likeCard);
   const btnCardDelete = cardElement.querySelector('.card__delete');
@@ -138,9 +138,9 @@ function createCard(item) {
   return cardElement;
 };
 
-//Функция добавления i-той карточки в начало списка
-function addCard(item) {
-  cardsList.prepend(createCard(item));
+//Функция добавления карточки
+function addCard(cardData) {
+  cardsList.prepend(createCard(cardData));
 };
 
 //Обработчик отправки формы редактирования профиля
@@ -155,12 +155,12 @@ function formEditSubmitHandler (evt) {
 function formAddSubmitHandler (evt) {
   const btnAdd = evt.target.querySelector('.form__save-button');
   evt.preventDefault();
-  const item = {
+  const cardData = {
     name: placeInput.value,
     link: urlInput.value
   };
   //console.log(item);
-  addCard(item);
+  addCard(cardData);
   closePopup();
   formAdd.reset();  //Очищаем поля формы
   //делаем кнопку неактивной
