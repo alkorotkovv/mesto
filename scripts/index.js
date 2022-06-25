@@ -74,7 +74,7 @@ function closePopupByClick(evt) {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-  const btnEdit = formEdit.querySelector('.form__save-button');
+  const btnSubmit = formEdit.querySelector('.form__save-button');
 
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
@@ -88,13 +88,12 @@ function openPopupEdit() {
     //создадим объект инпута для удобства (передачи его как аргумента)
     const inputObject = {
       input: inputElement,
-      //inputErrorClass: toValidateList.inputErrorClass,
       errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
     };
-    hideInputError(inputObject);  //скрываем ошибки при первом открытии
+    hideInputError(inputObject);  //скрываем ошибки при открытии
   });
 
-  activateButton(btnEdit);
+  activateButton(btnSubmit);  //активируем кнопку при открытии
   openPopup(popupEdit);
 };
 
@@ -183,8 +182,8 @@ btnProfileAdd.addEventListener('click', openPopupAdd);
 
 //Добавляем слушатели на все кнопки закрытия попапа на странице
 const btnsClosePopup = page.querySelectorAll('.popup__close-button');
-btnsClosePopup.forEach((item) => {
-  item.addEventListener('click', closePopup);
+btnsClosePopup.forEach((btnElement) => {
+  btnElement.addEventListener('click', closePopup);
 });
 
 //Слушатель для кнопки сохранения формы редактирования профиля
