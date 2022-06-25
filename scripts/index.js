@@ -24,6 +24,9 @@ const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 const cardsList = page.querySelector('.elements__cards');
 const cardTemplate = page.querySelector('#cardTemplate').content;
 
+const inputListEdit = formEdit.querySelectorAll('.form__input');
+
+
 
 //Функция получения открытого попапа
 function getOpenedPopup() {
@@ -71,23 +74,27 @@ function closePopupByClick(evt) {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
+  const btnEdit = formEdit.querySelector('.form__save-button');
+
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
-  /*
-  const inputObject = {
-    input: nameInput,
-    inputErrorClass: 'form__input_type_error',
-    errorSpan: formEdit.querySelector(`.input-name-error`)
-  };
-  hideInputError(inputObject);
-  */
 
-  //Потыкался но так и не понял как это сделать в соответствии с вашим комментарием "можно лучше". Если опишете более подробно буду очень благодарен)
+  //nameInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
+  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
+  //jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
+  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
 
-  nameInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
-  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
-  jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
-  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
+  inputListEdit.forEach((inputElement) => {
+    //создадим объект инпута для удобства (передачи его как аргумента)
+    const inputObject = {
+      input: inputElement,
+      //inputErrorClass: toValidateList.inputErrorClass,
+      errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
+    };
+    hideInputError(inputObject);  //скрываем ошибки при первом открытии
+  });
+
+  activateButton(btnEdit);
   openPopup(popupEdit);
 };
 
@@ -161,11 +168,9 @@ function formAddSubmitHandler (evt) {
   };
   //console.log(item);
   addCard(cardData);
-  closePopup();
   formAdd.reset();  //Очищаем поля формы
-  //делаем кнопку неактивной
-  btnAdd.classList.add('form__save-button_disabled');
-  btnAdd.disabled = true;
+  deactivateButton(btnAdd); //делаем кнопку неактивной
+  closePopup();
 };
 
 
