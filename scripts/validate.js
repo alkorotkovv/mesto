@@ -18,8 +18,12 @@ function enableValidation(toValidateList) {
     const formObject = {
       form: formElement,
       inputList: Array.from(formElement.querySelectorAll(toValidateList.inputSelector)),
-      //inputErrorClass: toValidateList.inputErrorClass,
-      saveButton: formElement.querySelector(toValidateList.submitButtonSelector),
+      inputErrorClass: toValidateList.inputErrorClass,
+      saveButton:
+      {
+        buttonElement: formElement.querySelector(toValidateList.submitButtonSelector),
+        inactiveButtonClass: toValidateList.inactiveButtonClass
+      }
       //formErrorClass: toValidateList.errorClass
     };
 
@@ -35,13 +39,14 @@ const checkFormValidity = (formObject) => {
     //создадим объект инпута для удобства (передачи его как аргумента)
     const inputObject = {
       input: inputElement,
-      //inputErrorClass: toValidateList.inputErrorClass,
+      inputErrorClass: formObject.inputErrorClass,
       errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
     };
     //console.log(inputObject);
 
     //добавляем слушатели на все инпуты по событию 'ввод'
     inputElement.addEventListener('input', function () {
+      //console.log('случился ввод');
       checkInputValidity(inputObject);
       toggleSaveButtonState(formObject);
     });
@@ -68,18 +73,20 @@ function toggleSaveButtonState(formObject) {
     activateButton(formObject.saveButton);
 };
 
-function activateButton(buttonElement) {
-  buttonElement.classList.remove(toValidateList.inactiveButtonClass);
-  buttonElement.disabled = false;
+function activateButton(buttonObject) {
+  buttonObject.buttonElement.classList.remove(buttonObject.inactiveButtonClass);
+  buttonObject.buttonElement.disabled = false;
 };
 
-function deactivateButton(buttonElement) {
-  buttonElement.classList.add(toValidateList.inactiveButtonClass);
-  buttonElement.disabled = true;
+function deactivateButton(buttonObject) {
+  buttonObject.buttonElement.classList.add(buttonObject.inactiveButtonClass);
+  buttonObject.buttonElement.disabled = true;
 };
 
 //Функция проверки существования невалидного инпута на всей форме
 function hasInvalidInput(formObject) {
+  //console.log('проверяем все инпуты');
+  //formObject.inputList.forEach((inputElement) => {console.log(inputElement.validity.valid);});
   return formObject.inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
@@ -92,13 +99,13 @@ function isInputValid(inputObject) {
 
 //Функция отображения ошибки при невалидном инпуте
 const showInputError = (inputObject) => {
-  inputObject.input.classList.add(toValidateList.inputErrorClass);
+  inputObject.input.classList.add(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = inputObject.input.validationMessage;
 };
 
 //Функция скрытия ошибки при валидном инпуте
 const hideInputError = (inputObject) => {
-  inputObject.input.classList.remove(toValidateList.inputErrorClass);
+  inputObject.input.classList.remove(inputObject.inputErrorClass);
   inputObject.errorSpan.textContent = '';
 };
 

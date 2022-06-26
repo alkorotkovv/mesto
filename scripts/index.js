@@ -74,7 +74,6 @@ function closePopupByClick(evt) {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-  const btnSubmit = formEdit.querySelector('.form__save-button');
 
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
@@ -83,17 +82,22 @@ function openPopupEdit() {
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
   //jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
+  const btnSubmitObject = {
+    buttonElement: formEdit.querySelector('.form__save-button'),
+    inactiveButtonClass: toValidateList.inactiveButtonClass
+  };
 
   inputListEdit.forEach((inputElement) => {
     //создадим объект инпута для удобства (передачи его как аргумента)
     const inputObject = {
       input: inputElement,
+      inputErrorClass: toValidateList.inputErrorClass,
       errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
     };
     hideInputError(inputObject);  //скрываем ошибки при открытии
   });
 
-  activateButton(btnSubmit);  //активируем кнопку при открытии
+  activateButton(btnSubmitObject);  //активируем кнопку при открытии
   openPopup(popupEdit);
 };
 
@@ -159,16 +163,21 @@ function formEditSubmitHandler (evt) {
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
-  const btnAdd = evt.target.querySelector('.form__save-button');
+
   evt.preventDefault();
+
+  const btnSubmitObject = {
+    buttonElement: evt.target.querySelector('.form__save-button'),
+    inactiveButtonClass: toValidateList.inactiveButtonClass
+  }
+
   const cardData = {
     name: placeInput.value,
     link: urlInput.value
   };
-  //console.log(item);
   addCard(cardData);
   formAdd.reset();  //Очищаем поля формы
-  deactivateButton(btnAdd); //делаем кнопку неактивной
+  deactivateButton(btnSubmitObject); //делаем кнопку неактивной
   closePopup();
 };
 
