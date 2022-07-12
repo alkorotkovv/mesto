@@ -86,7 +86,7 @@ function deactivateButton(buttonObject) {
 //Функция проверки существования невалидного инпута на всей форме
 function hasInvalidInput(formObject) {
   //console.log('проверяем все инпуты');
-  //formObject.inputList.forEach((inputElement) => {console.log(inputElement.validity.valid);});
+  formObject.inputList.forEach((inputElement) => {console.log(inputElement.validity);});
   return formObject.inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });

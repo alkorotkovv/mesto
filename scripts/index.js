@@ -21,7 +21,7 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 const popupCardImage = popupCard.querySelector('.card-scale__image');
 const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 
-const cardsList = page.querySelector('.elements__cards');
+export const cardsList = page.querySelector('.elements__cards');
 const cardTemplate = page.querySelector('#cardTemplate').content;
 
 const inputListEdit = formEdit.querySelectorAll('.form__input');
@@ -35,7 +35,7 @@ function getOpenedPopup() {
 };
 
 //Функция открытия попапа
-function openPopup(popupElement) {
+export function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   popupElement.addEventListener('click', closePopupByClick);
   document.addEventListener('keydown', closePopupByKeyPress);
@@ -242,6 +242,6 @@ initialCards.forEach(function (item, index) {
 );
 */
 
-
+//export {openPopup, cardsList};
 //Создаем карточки по умолчанию
 initCards();
