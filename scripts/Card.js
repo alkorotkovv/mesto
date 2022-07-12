@@ -1,6 +1,7 @@
+//Импорт необходимых данных
 import {openPopup} from './index.js';
 
-const cardsList = document.querySelector('.elements__cards');
+//Объявление переменных
 const popupCard = document.querySelector('.popup_type_card');
 const popupCardImage = popupCard.querySelector('.card-scale__image');
 const popupCardCaption = popupCard.querySelector('.card-scale__caption');
@@ -16,16 +17,19 @@ export class Card {
     this._cardSelector = cardSelector;
   };
 
+  //Метод получения шаблона карточки
   _getTemplate() {
     const cardTemplate = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
     return cardTemplate;
   };
 
+  //Метод лайка
   _like() {
     this._btnCardLike.classList.toggle('card__like_active');
     this._isLiked = !this._isLiked;
   };
 
+  //Метод открытия попапа карточки
   _openPopupCard() {
     popupCardImage.src = this._link;
     popupCardImage.alt = 'попап ' + this._name;
@@ -33,10 +37,12 @@ export class Card {
     openPopup(popupCard);
   };
 
+  //Метод удаления карточки
   _deleteCard() {
     this._cardElement.remove();
   };
 
+  //Метод, добавляющий слушатели
   _setEventListeners() {
     this._btnCardLike = this._cardElement.querySelector('.card__like');
     this._btnCardLike.addEventListener('click', () => {
@@ -54,7 +60,7 @@ export class Card {
     });
   };
 
-
+  //Публичный метод создания элемента карточки
   create() {
     this._cardElement = this._getTemplate();
     this._cardElement.querySelector('.card__title').textContent = this._name;
@@ -68,7 +74,7 @@ export class Card {
 }
 
 /*
-const card = new Card(initialCards[1], '#cardTemplate');
+const card = new Card(initialCards[0], '#cardTemplate');
 const cardElement = card.create();
 cardsList.append(cardElement);
 */
