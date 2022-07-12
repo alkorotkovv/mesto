@@ -25,3 +25,13 @@ export const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+//Объект с селекторами, необходимых для валидации
+export const toValidateList = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__save-button',
+  inactiveButtonClass: 'form__save-button_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__error_visible'
+};

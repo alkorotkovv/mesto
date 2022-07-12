@@ -1,6 +1,7 @@
 //Импорт необходимых данных
 import { Card } from "./Card.js";
-import { initialCards } from "./initial-cards.js";
+import { initialCards, toValidateList } from "./constants.js";
+import { FormValidator } from "./FormValidator.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
@@ -92,10 +93,10 @@ function openPopupEdit() {
       inputErrorClass: toValidateList.inputErrorClass,
       errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
     };
-    hideInputError(inputObject);  //скрываем ошибки при открытии
+    formEditValidator._hideInputError(inputObject);  //скрываем ошибки при открытии
   });
 
-  activateButton(btnSubmitObject);  //активируем кнопку при открытии
+  formEditValidator._activateButton(btnSubmitObject);  //активируем кнопку при открытии
   openPopup(popupEdit);
 };
 
@@ -139,7 +140,7 @@ function formAddSubmitHandler (evt) {
   };
   addCard(cardData);
   formAdd.reset();  //Очищаем поля формы
-  deactivateButton(btnSubmitObject); //делаем кнопку неактивной
+  formAddValidator._deactivateButton(btnSubmitObject); //делаем кнопку неактивной
   closePopup();
 };
 
@@ -168,3 +169,9 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 
 //Создаем карточки по умолчанию
 initCards();
+
+const formEditValidator = new FormValidator(toValidateList, formEdit);
+formEditValidator.enableValidation();
+
+const formAddValidator = new FormValidator(toValidateList, formAdd);
+formAddValidator.enableValidation();
