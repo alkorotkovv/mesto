@@ -29,9 +29,6 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 
 const cardsList = document.querySelector('.elements__cards');
 
-const inputListEdit = formEdit.querySelectorAll('.form__input');
-
-
 
 
 
@@ -119,6 +116,7 @@ function formAddSubmitHandler (evt) {
 //Функция добавления карточки
 function generateCard(cardData) {
   const card = new Card(cardData, '#cardTemplate');
+  console.log(card);
   return card.createCardElement();
 };
 
