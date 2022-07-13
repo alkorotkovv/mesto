@@ -58,7 +58,6 @@ function closePopup(popupElement) {
 function closePopup() {
   const openedPopup = getOpenedPopup();
   document.removeEventListener('keydown', closePopupByKeyPress);
-  document.removeEventListener('click', closePopupByClick);
   openedPopup.classList.remove('popup_opened');
 };
 */
@@ -103,17 +102,6 @@ function openPopupAdd() {
   openPopup(popupAdd);
 };
 
-//Функция инициализации первых 6ти карточек
-function initCards() {
-  initialCards.forEach((cardData) => {addCard(cardData)});
-};
-
-//Функция добавления карточки
-function addCard(cardData) {
-  const newCard = new Card(cardData, '#cardTemplate');
-  cardsList.prepend(newCard.create());
-};
-
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
@@ -131,11 +119,31 @@ function formAddSubmitHandler (evt) {
     name: placeInput.value,
     link: urlInput.value
   };
-  addCard(cardData);
+  insertCard(generateCard(cardData));
   formAdd.reset();  //Очищаем поля формы
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   closePopup(openedPopup);
 };
+
+//Функция добавления карточки
+function generateCard(cardData) {
+  const newCard = new Card(cardData, '#cardTemplate');
+  return newCard.create();
+};
+
+//Функция вставки карточки в разметку
+function insertCard(cardItem) {
+  cardsList.prepend(cardItem);
+};
+
+//Функция инициализации первых 6ти карточек
+function initCards() {
+  initialCards.forEach((cardData) => {
+    const cardItem = generateCard(cardData);
+    insertCard(cardItem);
+    });
+};
+
 
 
 
