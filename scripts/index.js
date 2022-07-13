@@ -1,6 +1,6 @@
 //Импорт необходимых данных
-import { Card } from "./Card.js";
 import { initialCards, toValidateList } from "./constants.js";
+import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 
 //Блок объявления переменных
@@ -81,22 +81,18 @@ function openPopupEdit() {
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
   //jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
   //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
-  const btnSubmitObject = {
-    buttonElement: formEdit.querySelector('.form__save-button'),
-    inactiveButtonClass: toValidateList.inactiveButtonClass
-  };
+  const btnSubmitElement = formEdit.querySelector('.form__save-button');
 
   inputListEdit.forEach((inputElement) => {
     //создадим объект инпута для удобства (передачи его как аргумента)
     const inputObject = {
       input: inputElement,
-      inputErrorClass: toValidateList.inputErrorClass,
       errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
     };
-    formEditValidator._hideInputError(inputObject);  //скрываем ошибки при открытии
+    formEditValidator.hideInputError(inputObject);  //скрываем ошибки при открытии
   });
 
-  formEditValidator._activateButton(btnSubmitObject);  //активируем кнопку при открытии
+  formEditValidator.activateButton(btnSubmitElement);  //активируем кнопку при открытии
   openPopup(popupEdit);
 };
 
@@ -126,23 +122,19 @@ function formEditSubmitHandler (evt) {
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
-
   evt.preventDefault();
-
-  const btnSubmitObject = {
-    buttonElement: evt.target.querySelector('.form__save-button'),
-    inactiveButtonClass: toValidateList.inactiveButtonClass
-  }
-
+  const btnSubmitElement = evt.target.querySelector('.form__save-button');
   const cardData = {
     name: placeInput.value,
     link: urlInput.value
   };
   addCard(cardData);
   formAdd.reset();  //Очищаем поля формы
-  formAddValidator._deactivateButton(btnSubmitObject); //делаем кнопку неактивной
+  formAddValidator.deactivateButton(btnSubmitElement); //делаем кнопку неактивной
   closePopup();
 };
+
+
 
 
 
@@ -161,7 +153,7 @@ btnsClosePopup.forEach((btnElement) => {
 //Слушатель для кнопки сохранения формы редактирования профиля
 formEdit.addEventListener('submit', formEditSubmitHandler);
 
-//Слушатель для кнопки создания новой карточки
+//Слушатель для кнопки создания новой карточки в попапе
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
 
@@ -170,6 +162,7 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 //Создаем карточки по умолчанию
 initCards();
 
+//Создаем валидаторы для форм
 const formEditValidator = new FormValidator(toValidateList, formEdit);
 formEditValidator.enableValidation();
 

@@ -1,97 +1,90 @@
 //Класс валидатора формы
 export class FormValidator {
-  constructor(toValidateSelectors, toValidateFormElement) {
-    this._toValidateSelectors = toValidateSelectors;
+  constructor(toValidateSelectors, toValidateFormElement)
+  {
+    this._inputList = Array.from(toValidateFormElement.querySelectorAll(toValidateSelectors.inputSelector));
+    this._saveButton = toValidateFormElement.querySelector(toValidateSelectors.submitButtonSelector);
+    this._inactiveButtonClass = toValidateSelectors.inactiveButtonClass;
+    this._inputErrorClass = toValidateSelectors.inputErrorClass;
     this._toValidateForm = toValidateFormElement;
   }
 
+  //Публичный метод, включает валидацию формы
   enableValidation() {
-    //создадим объект формы для удобства (передачи его как аргумента)
-    const formObject = {
-      form: this._toValidateForm,
-      inputList: Array.from(this._toValidateForm.querySelectorAll(this._toValidateSelectors.inputSelector)),
-      inputErrorClass: this._toValidateSelectors.inputErrorClass,
-      saveButton:
-      {
-        buttonElement: this._toValidateForm.querySelector(this._toValidateSelectors.submitButtonSelector),
-        inactiveButtonClass: this._toValidateSelectors.inactiveButtonClass
-      }
-      //formErrorClass: toValidateList.errorClass
-    };
-
-    this._checkFormValidity(formObject);
-
+    this._checkFormValidity();
   };
 
-  _checkFormValidity = (formObject) => {
-
-    formObject.inputList.forEach((inputElement, index) => {
+  //Приватный метод, валидация формы
+  _checkFormValidity = () => {
+    this._inputList.forEach((inputElement) => {
       //создадим объект инпута для удобства (передачи его как аргумента)
       const inputObject = {
         input: inputElement,
-        inputErrorClass: formObject.inputErrorClass,
-        errorSpan: formObject.form.querySelector(`.${inputElement.id}-error`)
+        errorSpan: this._toValidateForm.querySelector(`.${inputElement.id}-error`)
       };
       //добавляем слушатели на все инпуты по событию 'ввод'
       inputElement.addEventListener('input', () => {
-        //console.log('случился ввод');
+        //console.log('произошёл ввод');
         this._checkInputValidity(inputObject);
-        this._toggleSaveButtonState(formObject);
+        this._toggleSaveButtonState();
       });
     });
   };
 
+  //Метод-реакция на валидность конкретного инпута
   _checkInputValidity = (inputObject) => {
-
     if (!this._isInputValid(inputObject)) {
       //console.log('инпут не валидный');
       this._showInputError(inputObject);
     } else {
       //console.log('инпут валидный');
-      this._hideInputError(inputObject);
+      this.hideInputError(inputObject);
     };
   };
 
-  _toggleSaveButtonState(formObject) {
-    if (this._hasInvalidInput(formObject))
-      this._deactivateButton(formObject.saveButton);
+  //Метод для переключения активности кнопки сабмита
+  _toggleSaveButtonState() {
+    if (this._hasInvalidInput())
+      this.deactivateButton(this._saveButton);
     else
-      this._activateButton(formObject.saveButton);
+      this.activateButton(this._saveButton);
   };
 
-  _activateButton(buttonObject) {
-    buttonObject.buttonElement.classList.remove(buttonObject.inactiveButtonClass);
-    buttonObject.buttonElement.disabled = false;
+  //Метод для активации произвольной кнопки
+  activateButton(buttonElement) {
+    buttonElement.classList.remove(this._inactiveButtonClass);
+    buttonElement.disabled = false;
   };
 
-  _deactivateButton(buttonObject) {
-    buttonObject.buttonElement.classList.add(buttonObject.inactiveButtonClass);
-    buttonObject.buttonElement.disabled = true;
+  //Метод для деактивации произвольной кнопки
+  deactivateButton(buttonElement) {
+    buttonElement.classList.add(this._inactiveButtonClass);
+    buttonElement.disabled = true;
   };
 
-  //Функция проверки существования невалидного инпута на всей форме
-  _hasInvalidInput(formObject) {
+  //Метод проверки существования невалидного инпута на всей форме
+  _hasInvalidInput() {
     //console.log('проверяем все инпуты');
     //formObject.inputList.forEach((inputElement) => {console.log(inputElement.validity);});
-    return formObject.inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   };
 
-  //Функция проверки конкретного инпута на валидность
+  //Метод проверки конкретного инпута на валидность
   _isInputValid(inputObject) {
     return (inputObject.input.validity.valid);
   };
 
-  //Функция отображения ошибки при невалидном инпуте
+  //Метод для отображения ошибки при невалидном инпуте
   _showInputError = (inputObject) => {
-    inputObject.input.classList.add(inputObject.inputErrorClass);
+    inputObject.input.classList.add(this._inputErrorClass);
     inputObject.errorSpan.textContent = inputObject.input.validationMessage;
   };
 
-  //Функция скрытия ошибки при валидном инпуте
-  _hideInputError = (inputObject) => {
-    inputObject.input.classList.remove(inputObject.inputErrorClass);
+  //Метод для скрытия ошибки при валидном инпуте
+  hideInputError = (inputObject) => {
+    inputObject.input.classList.remove(this._inputErrorClass);
     inputObject.errorSpan.textContent = '';
   };
 
