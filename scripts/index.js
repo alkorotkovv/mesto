@@ -1,18 +1,23 @@
 //Импорт необходимых данных
-import { initialCards, toValidateList } from "./constants.js";
+import { initialCards, validateList } from "./constants.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
 
+const popupList = page.querySelectorAll('.popup');
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
+export const popupCard = page.querySelector('.popup_type_card');
+
+export const popupCardImage = popupCard.querySelector('.card-scale__image');
+export const popupCardCaption = popupCard.querySelector('.card-scale__caption');
 
 const formEdit = popupEdit.querySelector('.form_profile_edit');
 const formAdd = popupAdd.querySelector('.form_card_add');
-const btnProfileEdit = page.querySelector('.profile__edit-button');
-const btnProfileAdd = page.querySelector('.profile__add-button');
+const buttonProfileEdit = page.querySelector('.profile__edit-button');
+const buttonProfileAdd = page.querySelector('.profile__add-button');
 
 const nameProfile = page.querySelector('.profile__title');
 const jobProfile = page.querySelector('.profile__subtitle');
@@ -28,28 +33,27 @@ const inputListEdit = formEdit.querySelectorAll('.form__input');
 
 
 
+
+
+
 //Функция получения открытого попапа
 function getOpenedPopup() {
   return page.querySelector('.popup_opened');
-  //return item.closest('.popup_opened');
 };
 
 //Функция открытия попапа
 export function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-  popupElement.addEventListener('click', closePopupByClick);
   document.addEventListener('keydown', closePopupByKeyPress);
 };
 
-/*
 //Функция закрытия попапа
 function closePopup(popupElement) {
-  popupElement.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupByKeyPress);
-  document.removeEventListener('click', closePopupByClick);
+  popupElement.classList.remove('popup_opened');
 };
-*/
 
+/*
 //Функция закрытия попапа (поскольку активным может быть только один, аргумент можно не передавать)
 function closePopup() {
   const openedPopup = getOpenedPopup();
@@ -57,18 +61,21 @@ function closePopup() {
   document.removeEventListener('click', closePopupByClick);
   openedPopup.classList.remove('popup_opened');
 };
+*/
 
 //Функция закрытия попапа на нажатие ESC
 function closePopupByKeyPress(evt) {
   if (evt.key === 'Escape') {
-    closePopup();
+    const openedPopup = getOpenedPopup();
+    closePopup(openedPopup);
   }
 };
 
 //Функция закрытия попапа на клик по оверлэю
 function closePopupByClick(evt) {
   if (evt.target.classList.contains('popup_opened')) {
-    closePopup();
+    const openedPopup = evt.target;
+    closePopup(openedPopup);
   }
 };
 
@@ -77,11 +84,6 @@ function openPopupEdit() {
 
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
-  //nameInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
-  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
-  //jobInput.dispatchEvent(new Event('input'));  //делаем имитацию нажатия на клавишу чтобы сработал обработчик для валидации формы,
-  //тк если оставить 1 символ в любом поле, закрыть и заново открыть попап ошибка остается висеть поскольку еще не было события input для полей формы и функции не вызываются
-  const btnSubmitElement = formEdit.querySelector('.form__save-button');
 
   inputListEdit.forEach((inputElement) => {
     //создадим объект инпута для удобства (передачи его как аргумента)
@@ -92,7 +94,7 @@ function openPopupEdit() {
     formEditValidator.hideInputError(inputObject);  //скрываем ошибки при открытии
   });
 
-  formEditValidator.activateButton(btnSubmitElement);  //активируем кнопку при открытии
+  formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   openPopup(popupEdit);
 };
 
@@ -115,23 +117,24 @@ function addCard(cardData) {
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
+  const openedPopup = evt.target.closest('.popup_opened');
   nameProfile.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  closePopup();
+  closePopup(openedPopup);
 };
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
   evt.preventDefault();
-  const btnSubmitElement = evt.target.querySelector('.form__save-button');
+  const openedPopup = evt.target.closest('.popup_opened');
   const cardData = {
     name: placeInput.value,
     link: urlInput.value
   };
   addCard(cardData);
   formAdd.reset();  //Очищаем поля формы
-  formAddValidator.deactivateButton(btnSubmitElement); //делаем кнопку неактивной
-  closePopup();
+  formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
+  closePopup(openedPopup);
 };
 
 
@@ -139,15 +142,18 @@ function formAddSubmitHandler (evt) {
 
 
 //Слушатель для кнопки редактировать профиль
-btnProfileEdit.addEventListener('click', openPopupEdit);
+buttonProfileEdit.addEventListener('click', openPopupEdit);
 
 //Слушатель для кнопки добавить карточку
-btnProfileAdd.addEventListener('click', openPopupAdd);
+buttonProfileAdd.addEventListener('click', openPopupAdd);
 
 //Добавляем слушатели на все кнопки закрытия попапа на странице
-const btnsClosePopup = page.querySelectorAll('.popup__close-button');
-btnsClosePopup.forEach((btnElement) => {
-  btnElement.addEventListener('click', closePopup);
+const buttonClosePopupList = page.querySelectorAll('.popup__close-button');
+buttonClosePopupList.forEach((buttonElement) => {
+  buttonElement.addEventListener('click', (evt) => {
+    const openedPopup = evt.target.closest('.popup_opened');
+    closePopup(openedPopup);
+  });
 });
 
 //Слушатель для кнопки сохранения формы редактирования профиля
@@ -156,6 +162,11 @@ formEdit.addEventListener('submit', formEditSubmitHandler);
 //Слушатель для кнопки создания новой карточки в попапе
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
+//Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей)
+popupList.forEach((popupItem)=>{
+  popupItem.addEventListener('click', closePopupByClick);
+});
+
 
 
 
@@ -163,8 +174,8 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 initCards();
 
 //Создаем валидаторы для форм
-const formEditValidator = new FormValidator(toValidateList, formEdit);
+const formEditValidator = new FormValidator(validateList, formEdit);
 formEditValidator.enableValidation();
 
-const formAddValidator = new FormValidator(toValidateList, formAdd);
+const formAddValidator = new FormValidator(validateList, formAdd);
 formAddValidator.enableValidation();

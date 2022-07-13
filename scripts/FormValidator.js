@@ -1,12 +1,12 @@
 //Класс валидатора формы
 export class FormValidator {
-  constructor(toValidateSelectors, toValidateFormElement)
+  constructor(validateSelectors, validateFormElement)
   {
-    this._inputList = Array.from(toValidateFormElement.querySelectorAll(toValidateSelectors.inputSelector));
-    this._saveButton = toValidateFormElement.querySelector(toValidateSelectors.submitButtonSelector);
-    this._inactiveButtonClass = toValidateSelectors.inactiveButtonClass;
-    this._inputErrorClass = toValidateSelectors.inputErrorClass;
-    this._toValidateForm = toValidateFormElement;
+    this._inputList = Array.from(validateFormElement.querySelectorAll(validateSelectors.inputSelector));
+    this._saveButton = validateFormElement.querySelector(validateSelectors.submitButtonSelector);
+    this._inactiveButtonClass = validateSelectors.inactiveButtonClass;
+    this._inputErrorClass = validateSelectors.inputErrorClass;
+    this._validateForm = validateFormElement;
   }
 
   //Публичный метод, включает валидацию формы
@@ -20,7 +20,7 @@ export class FormValidator {
       //создадим объект инпута для удобства (передачи его как аргумента)
       const inputObject = {
         input: inputElement,
-        errorSpan: this._toValidateForm.querySelector(`.${inputElement.id}-error`)
+        errorSpan: this._validateForm.querySelector(`.${inputElement.id}-error`)
       };
       //добавляем слушатели на все инпуты по событию 'ввод'
       inputElement.addEventListener('input', () => {
@@ -45,21 +45,21 @@ export class FormValidator {
   //Метод для переключения активности кнопки сабмита
   _toggleSaveButtonState() {
     if (this._hasInvalidInput())
-      this.deactivateButton(this._saveButton);
+      this.deactivateSaveButton();
     else
-      this.activateButton(this._saveButton);
+      this.activateSaveButton();
   };
 
   //Метод для активации произвольной кнопки
-  activateButton(buttonElement) {
-    buttonElement.classList.remove(this._inactiveButtonClass);
-    buttonElement.disabled = false;
+  activateSaveButton() {
+    this._saveButton.classList.remove(this._inactiveButtonClass);
+    this._saveButton.disabled = false;
   };
 
   //Метод для деактивации произвольной кнопки
-  deactivateButton(buttonElement) {
-    buttonElement.classList.add(this._inactiveButtonClass);
-    buttonElement.disabled = true;
+  deactivateSaveButton() {
+    this._saveButton.classList.add(this._inactiveButtonClass);
+    this._saveButton.disabled = true;
   };
 
   //Метод проверки существования невалидного инпута на всей форме

@@ -27,7 +27,7 @@ export const initialCards = [
 ];
 
 //Объект с селекторами, необходимых для валидации
-export const toValidateList = {
+export const validateList = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__save-button',
