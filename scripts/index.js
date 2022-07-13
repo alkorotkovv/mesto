@@ -80,19 +80,10 @@ function closePopupByClick(evt) {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-
   nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
   jobInput.value = jobProfile.textContent;
 
-  inputListEdit.forEach((inputElement) => {
-    //создадим объект инпута для удобства (передачи его как аргумента)
-    const inputObject = {
-      input: inputElement,
-      errorSpan: formEdit.querySelector(`.${inputElement.id}-error`)
-    };
-    formEditValidator.hideInputError(inputObject);  //скрываем ошибки при открытии
-  });
-
+  formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   openPopup(popupEdit);
 };

@@ -7,7 +7,7 @@ export class FormValidator {
     this._inactiveButtonClass = validateSelectors.inactiveButtonClass;
     this._inputErrorClass = validateSelectors.inputErrorClass;
     this._validateForm = validateFormElement;
-  }
+  };
 
   //Публичный метод, включает валидацию формы
   enableValidation() {
@@ -15,7 +15,7 @@ export class FormValidator {
   };
 
   //Приватный метод, валидация формы
-  _checkFormValidity = () => {
+  _checkFormValidity() {
     this._inputList.forEach((inputElement) => {
       //создадим объект инпута для удобства (передачи его как аргумента)
       const inputObject = {
@@ -32,13 +32,13 @@ export class FormValidator {
   };
 
   //Метод-реакция на валидность конкретного инпута
-  _checkInputValidity = (inputObject) => {
+  _checkInputValidity(inputObject) {
     if (!this._isInputValid(inputObject)) {
       //console.log('инпут не валидный');
       this._showInputError(inputObject);
     } else {
       //console.log('инпут валидный');
-      this.hideInputError(inputObject);
+      this._hideInputError(inputObject);
     };
   };
 
@@ -77,15 +77,27 @@ export class FormValidator {
   };
 
   //Метод для отображения ошибки при невалидном инпуте
-  _showInputError = (inputObject) => {
+  _showInputError(inputObject) {
     inputObject.input.classList.add(this._inputErrorClass);
     inputObject.errorSpan.textContent = inputObject.input.validationMessage;
   };
 
   //Метод для скрытия ошибки при валидном инпуте
-  hideInputError = (inputObject) => {
+  _hideInputError(inputObject) {
     inputObject.input.classList.remove(this._inputErrorClass);
     inputObject.errorSpan.textContent = '';
+  };
+
+  //Публичный метод для скрытия ошибок (используется в index.js)
+  hideErrors() {
+    this._inputList.forEach((inputElement) => {
+      //создадим объект инпута для удобства (передачи его как аргумента)
+      const inputObject = {
+        input: inputElement,
+        errorSpan: this._validateForm.querySelector(`.${inputElement.id}-error`)
+      };
+      this._hideInputError(inputObject);
+    });
   };
 
 }
