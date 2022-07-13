@@ -118,8 +118,8 @@ function formAddSubmitHandler (evt) {
 
 //Функция добавления карточки
 function generateCard(cardData) {
-  const newCard = new Card(cardData, '#cardTemplate');
-  return newCard.createCardElement();
+  const card = new Card(cardData, '#cardTemplate');
+  return card.createCardElement();
 };
 
 //Функция вставки карточки в разметку
