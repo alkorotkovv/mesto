@@ -130,7 +130,7 @@ function initCards() {
   initialCards.forEach((cardData) => {
     const cardElement = generateCard(cardData);
     insertCard(cardElement);
-    });
+  });
 };
 
 

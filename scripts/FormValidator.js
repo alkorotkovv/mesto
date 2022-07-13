@@ -36,7 +36,8 @@ export class FormValidator {
     if (!this._isInputValid(inputObject)) {
       //console.log('инпут не валидный');
       this._showInputError(inputObject);
-    } else {
+    }
+    else {
       //console.log('инпут валидный');
       this._hideInputError(inputObject);
     };
