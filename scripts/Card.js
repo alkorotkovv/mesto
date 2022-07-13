@@ -16,7 +16,6 @@ export class Card {
     this._buttonCardLike = this._cardElement.querySelector('.card__like');
     this._buttonCardImage = this._cardElement.querySelector('.card__image');
     this._buttonCardDelete = this._cardElement.querySelector('.card__delete');
-
   };
 
   /*
@@ -63,7 +62,7 @@ export class Card {
   };
 
   //Публичный метод создания элемента карточки
-  create() {
+  createCardElement() {
     //this._cardElement = this._getTemplate();
     this._cardNameElement.textContent = this._name;
     this._cardImageElement.src = this._link;
