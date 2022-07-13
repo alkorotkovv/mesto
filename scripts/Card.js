@@ -13,6 +13,10 @@ export class Card {
     this._cardElement = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
     this._cardImageElement = this._cardElement.querySelector('.card__image');
     this._cardNameElement = this._cardElement.querySelector('.card__title');
+    this._buttonCardLike = this._cardElement.querySelector('.card__like');
+    this._buttonCardImage = this._cardElement.querySelector('.card__image');
+    this._buttonCardDelete = this._cardElement.querySelector('.card__delete');
+
   };
 
   /*
@@ -45,17 +49,14 @@ export class Card {
 
   //Метод, добавляющий слушатели
   _setEventListeners() {
-    this._buttonCardLike = this._cardElement.querySelector('.card__like');
     this._buttonCardLike.addEventListener('click', () => {
       this._like();
     });
 
-    this._buttonCardImage = this._cardElement.querySelector('.card__image');
     this._buttonCardImage.addEventListener('click', () => {
       this._openPopupCard();
     });
 
-    this._buttonCardDelete = this._cardElement.querySelector('.card__delete');
     this._buttonCardDelete.addEventListener('click', () => {
       this._deleteCard();
     });

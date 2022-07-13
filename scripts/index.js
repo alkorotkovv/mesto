@@ -123,15 +123,15 @@ function generateCard(cardData) {
 };
 
 //Функция вставки карточки в разметку
-function insertCard(cardItem) {
-  cardsList.prepend(cardItem);
+function insertCard(cardElement) {
+  cardsList.prepend(cardElement);
 };
 
 //Функция инициализации первых 6ти карточек
 function initCards() {
   initialCards.forEach((cardData) => {
-    const cardItem = generateCard(cardData);
-    insertCard(cardItem);
+    const cardElement = generateCard(cardData);
+    insertCard(cardElement);
     });
 };
 
