@@ -93,16 +93,15 @@ function openPopupAdd() {
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  const openedPopup = evt.target.closest('.popup_opened');
   nameProfile.textContent = nameInput.value;
   jobProfile.textContent = jobInput.value;
-  closePopup(openedPopup);
+  closePopup(popupEdit);
 };
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
   evt.preventDefault();
-  const openedPopup = evt.target.closest('.popup_opened');
+
   const cardData = {
     name: placeInput.value,
     link: urlInput.value
@@ -110,13 +109,12 @@ function formAddSubmitHandler (evt) {
   insertCard(generateCard(cardData));
   formAdd.reset();  //Очищаем поля формы
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
-  closePopup(openedPopup);
+  closePopup(popupAdd);
 };
 
 //Функция добавления карточки
 function generateCard(cardData) {
   const card = new Card(cardData, '#cardTemplate');
-  console.log(card);
   return card.createCardElement();
 };
 

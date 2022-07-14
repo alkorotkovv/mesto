@@ -9,26 +9,18 @@ export class Card {
     this._link = data.link;
     this._isLiked = false;
     this._cardSelector = cardSelector;
-
-    this._cardElement = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
-    this._cardImageElement = this._cardElement.querySelector('.card__image');
-    this._cardNameElement = this._cardElement.querySelector('.card__title');
-    this._buttonCardLike = this._cardElement.querySelector('.card__like');
-    this._buttonCardImage = this._cardElement.querySelector('.card__image');
-    this._buttonCardDelete = this._cardElement.querySelector('.card__delete');
   };
 
-  /*
+
   //Метод получения шаблона карточки
   _getTemplate() {
-    const cardTemplate = document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
-    return cardTemplate;
+    return document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
   };
-  */
+
 
   //Метод лайка
   _like() {
-    this._buttonCardLike.classList.toggle('card__like_active');
+    this._cardLikeElement.classList.toggle('card__like_active');
     this._isLiked = !this._isLiked;
   };
 
@@ -48,22 +40,27 @@ export class Card {
 
   //Метод, добавляющий слушатели
   _setEventListeners() {
-    this._buttonCardLike.addEventListener('click', () => {
+    this._cardLikeElement.addEventListener('click', () => {
       this._like();
     });
 
-    this._buttonCardImage.addEventListener('click', () => {
+    this._cardImageElement.addEventListener('click', () => {
       this._openPopupCard();
     });
 
-    this._buttonCardDelete.addEventListener('click', () => {
+    this._cardDeleteElement.addEventListener('click', () => {
       this._deleteCard();
     });
   };
 
   //Публичный метод создания элемента карточки
   createCardElement() {
-    //this._cardElement = this._getTemplate();
+    this._cardElement = this._getTemplate();
+    this._cardImageElement = this._cardElement.querySelector('.card__image');
+    this._cardNameElement = this._cardElement.querySelector('.card__title');
+    this._cardLikeElement = this._cardElement.querySelector('.card__like');
+    this._cardDeleteElement = this._cardElement.querySelector('.card__delete');
+
     this._cardNameElement.textContent = this._name;
     this._cardImageElement.src = this._link;
     this._cardImageElement.alt = 'фотография ' + this._name;
@@ -73,9 +70,3 @@ export class Card {
   };
 
 }
-
-/*
-const card = new Card(initialCards[0], '#cardTemplate');
-const cardElement = card.create();
-cardsList.append(cardElement);
-*/
