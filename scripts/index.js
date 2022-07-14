@@ -67,6 +67,7 @@ function closePopupByKeyPress(evt) {
   }
 };
 
+/*
 //Функция закрытия попапа на клик по оверлэю
 function closePopupByClick(evt) {
   if (evt.target.classList.contains('popup_opened')) {
@@ -74,6 +75,7 @@ function closePopupByClick(evt) {
     closePopup(openedPopup);
   }
 };
+*/
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
@@ -142,6 +144,7 @@ buttonProfileEdit.addEventListener('click', openPopupEdit);
 //Слушатель для кнопки добавить карточку
 buttonProfileAdd.addEventListener('click', openPopupAdd);
 
+/*
 //Добавляем слушатели на все кнопки закрытия попапа на странице
 const buttonClosePopupList = page.querySelectorAll('.popup__close-button');
 buttonClosePopupList.forEach((buttonElement) => {
@@ -150,6 +153,7 @@ buttonClosePopupList.forEach((buttonElement) => {
     closePopup(openedPopup);
   });
 });
+*/
 
 //Слушатель для кнопки сохранения формы редактирования профиля
 formEdit.addEventListener('submit', formEditSubmitHandler);
@@ -157,9 +161,14 @@ formEdit.addEventListener('submit', formEditSubmitHandler);
 //Слушатель для кнопки создания новой карточки в попапе
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
-//Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей)
+//Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей или крестик)
 popupList.forEach((popupItem)=>{
-  popupItem.addEventListener('click', closePopupByClick);
+  popupItem.addEventListener('click', (evt) => {
+    console.log(evt.target)
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+      closePopup(popupItem)
+    }
+  });
 });
 
 
