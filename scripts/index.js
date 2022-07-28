@@ -9,15 +9,15 @@ import { Popup } from "./Popup.js";
 const page = document.querySelector('.page');
 
 const popupList = page.querySelectorAll('.popup');
-const popupEdit = page.querySelector('.popup_type_edit');
-const popupAdd = page.querySelector('.popup_type_add');
+//const popupEdit = page.querySelector('.popup_type_edit');
+//const popupAdd = page.querySelector('.popup_type_add');
 export const popupCard = page.querySelector('.popup_type_card');
 
-export const popupCardImage = popupCard.querySelector('.card-scale__image');
-export const popupCardCaption = popupCard.querySelector('.card-scale__caption');
+export const popupCardImage = page.querySelector('.card-scale__image');
+export const popupCardCaption = page.querySelector('.card-scale__caption');
 
-const formEdit = popupEdit.querySelector('.form_profile_edit');
-const formAdd = popupAdd.querySelector('.form_card_add');
+const formEdit = page.querySelector('.form_profile_edit');
+const formAdd = page.querySelector('.form_card_add');
 const buttonProfileEdit = page.querySelector('.profile__edit-button');
 const buttonProfileAdd = page.querySelector('.profile__add-button');
 
@@ -32,19 +32,35 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 const cardsList = document.querySelector('.elements__cards');
 
 const user = new UserInfo('.profile__title','.profile__subtitle');
-const popup = new Popup('.popup_type_edit');
+const popupEdit = new Popup('.popup_type_edit');
+const popupAdd = new Popup('.popup_type_add');
+//const popupCard = new Popup('.popup_type_card');
 
 
 
+
+
+
+/*
 //Функция получения открытого попапа
 function getOpenedPopup() {
+  return new Popup('.popup_opened');
   return page.querySelector('.popup_opened');
 };
+*/
+
+
+
+
+
+
+
+
 
 //Функция открытия попапа
 export function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByKeyPress);
+  //document.addEventListener('keydown', closePopupByKeyPress);
 };
 
 //Функция закрытия попапа
@@ -66,6 +82,8 @@ function closePopup() {
 function closePopupByKeyPress(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = getOpenedPopup();
+    console.log(openedPopup)
+    //openedPopup.close();
     closePopup(openedPopup);
   }
 };
@@ -88,14 +106,21 @@ function openPopupEdit() {
 
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
-  popup.open();
+  popupEdit.open();
   //openPopup(popupEdit);
 };
 
 //Функция открытия попапа добавления карточки
 function openPopupAdd() {
-  openPopup(popupAdd);
+  popupAdd.open();
+  //openPopup(popupAdd);
 };
+
+
+
+
+
+
 
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
@@ -167,6 +192,7 @@ formEdit.addEventListener('submit', formEditSubmitHandler);
 //Слушатель для кнопки создания новой карточки в попапе
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
+/*
 //Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей или крестик)
 popupList.forEach((popupItem)=>{
   popupItem.addEventListener('click', (evt) => {
@@ -177,7 +203,7 @@ popupList.forEach((popupItem)=>{
   });
 });
 
-
+*/
 
 
 //Создаем карточки по умолчанию
