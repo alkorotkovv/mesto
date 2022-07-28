@@ -19,8 +19,8 @@ const formAdd = popupAdd.querySelector('.form_card_add');
 const buttonProfileEdit = page.querySelector('.profile__edit-button');
 const buttonProfileAdd = page.querySelector('.profile__add-button');
 
-const nameProfile = page.querySelector('.profile__title');
-const jobProfile = page.querySelector('.profile__subtitle');
+export const nameProfile = page.querySelector('.profile__title');
+export const jobProfile = page.querySelector('.profile__subtitle');
 const nameInput = formEdit.querySelector('.form__input_content_name');
 const jobInput = formEdit.querySelector('.form__input_content_job');
 
