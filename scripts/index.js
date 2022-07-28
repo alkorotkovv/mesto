@@ -3,6 +3,7 @@ import { initialCards, validateList } from "./constants.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { UserInfo } from "./UserInfo.js";
+import { Popup } from "./Popup.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
@@ -31,6 +32,7 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 const cardsList = document.querySelector('.elements__cards');
 
 const user = new UserInfo('.profile__title','.profile__subtitle');
+const popup = new Popup('.popup_type_edit');
 
 
 
@@ -86,7 +88,8 @@ function openPopupEdit() {
 
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
-  openPopup(popupEdit);
+  popup.open();
+  //openPopup(popupEdit);
 };
 
 //Функция открытия попапа добавления карточки
