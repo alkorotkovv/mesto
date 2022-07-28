@@ -15,12 +15,10 @@ export class UserInfo {
     };
   };
 
+  //Метод заполняющий поля формы данными пользователя
   setUserInfo(name, job) {
     nameProfile.textContent = name;
     jobProfile.textContent = job;
   };
 
 }
-
-const user = new UserInfo('.profile__title','.profile__subtitle');
-console.log(user.getUserInfo())

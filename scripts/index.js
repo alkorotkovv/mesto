@@ -2,6 +2,7 @@
 import { initialCards, validateList } from "./constants.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import { UserInfo } from "./UserInfo.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
@@ -29,7 +30,7 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 
 const cardsList = document.querySelector('.elements__cards');
 
-
+const user = new UserInfo('.profile__title','.profile__subtitle');
 
 
 
@@ -79,8 +80,9 @@ function closePopupByClick(evt) {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-  nameInput.value = nameProfile.textContent;  //заполняем поля ввода данными из профиля
-  jobInput.value = jobProfile.textContent;
+  const userObject = user.getUserInfo();
+  nameInput.value = userObject.name;  //заполняем поля ввода данными из профиля
+  jobInput.value = userObject.job;
 
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
@@ -95,8 +97,9 @@ function openPopupAdd() {
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  nameProfile.textContent = nameInput.value;
-  jobProfile.textContent = jobInput.value;
+  user.setUserInfo(nameInput.value, jobInput.value)
+  //nameProfile.textContent = nameInput.value;
+  //jobProfile.textContent = jobInput.value;
   closePopup(popupEdit);
 };
 
@@ -164,7 +167,7 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 //Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей или крестик)
 popupList.forEach((popupItem)=>{
   popupItem.addEventListener('click', (evt) => {
-    console.log(evt.target)
+    //console.log(evt.target)
     if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
       closePopup(popupItem)
     }
