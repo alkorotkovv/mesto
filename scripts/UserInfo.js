@@ -1,5 +1,6 @@
 import {nameProfile, jobProfile} from './index.js';
 
+//Класс для работы с данными пользователя
 export class UserInfo {
   constructor(nameSelector, jobSelector)
   {

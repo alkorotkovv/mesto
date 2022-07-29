@@ -1,6 +1,3 @@
-//Импорт необходимых данных
-import {openPopup, popupCard, popupCardImage, popupCardCaption} from './index.js';
-
 //Класс карточки
 export class Card {
   constructor(data, cardSelector, {handleCardClick})

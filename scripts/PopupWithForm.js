@@ -1,5 +1,6 @@
 import { Popup } from "./Popup.js";
 
+//Класс-наследник попап с формой
 export class PopupWithForm extends Popup {
   constructor(popupSelector, formSubmitHandler)
   {
@@ -12,7 +13,6 @@ export class PopupWithForm extends Popup {
   getInputValues() {
     const object = {};
     this._inputs = Array.from(this._form.querySelectorAll('.form__input'));
-    //console.log(this._inputs);
     this._inputs.forEach((input) => object[input.name] = input.value);
     return object;
   };
