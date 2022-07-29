@@ -4,6 +4,8 @@ import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import { UserInfo } from "./UserInfo.js";
 import { Popup } from "./Popup.js";
+import { PopupWithForm } from "./PopupWithForm.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
@@ -32,12 +34,15 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 const cardsList = document.querySelector('.elements__cards');
 
 const user = new UserInfo('.profile__title','.profile__subtitle');
-const popupEdit = new Popup('.popup_type_edit');
-const popupAdd = new Popup('.popup_type_add');
+const popupEdit = new PopupWithForm('.popup_type_edit', formEditSubmitHandler);
+const popupAdd = new PopupWithForm('.popup_type_add');
 //const popupCard = new Popup('.popup_type_card');
 
 
 
+function gg() {
+  console.log("gg");
+}
 
 
 
@@ -62,7 +67,7 @@ export function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   //document.addEventListener('keydown', closePopupByKeyPress);
 };
-
+/*
 //Функция закрытия попапа
 function closePopup(popupElement) {
   document.removeEventListener('keydown', closePopupByKeyPress);
@@ -78,6 +83,7 @@ function closePopup() {
 };
 */
 
+/*
 //Функция закрытия попапа на нажатие ESC
 function closePopupByKeyPress(evt) {
   if (evt.key === 'Escape') {
@@ -125,10 +131,12 @@ function openPopupAdd() {
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  user.setUserInfo(nameInput.value, jobInput.value)
+  const { name, job } = popupEdit.getInputValues();
+  user.setUserInfo(name, job);
   //nameProfile.textContent = nameInput.value;
   //jobProfile.textContent = jobInput.value;
-  closePopup(popupEdit);
+  //closePopup(popupEdit);
+  popupEdit.close();
 };
 
 //Обработчик добавления новой карточки
@@ -186,8 +194,17 @@ buttonClosePopupList.forEach((buttonElement) => {
 });
 */
 
+
+
+
+
+
+
+
+
+
 //Слушатель для кнопки сохранения формы редактирования профиля
-formEdit.addEventListener('submit', formEditSubmitHandler);
+//formEdit.addEventListener('submit', formEditSubmitHandler);
 
 //Слушатель для кнопки создания новой карточки в попапе
 formAdd.addEventListener('submit', formAddSubmitHandler);
