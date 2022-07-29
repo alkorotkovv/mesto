@@ -109,7 +109,6 @@ function openPopupEdit() {
   const userObject = user.getUserInfo();
   nameInput.value = userObject.name;  //заполняем поля ввода данными из профиля
   jobInput.value = userObject.job;
-
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   popupEdit.open();
@@ -150,7 +149,8 @@ function formAddSubmitHandler (evt) {
   insertCard(generateCard(cardData));
   formAdd.reset();  //Очищаем поля формы
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
-  closePopup(popupAdd);
+  popupAdd.close();
+  //closePopup(popupAdd);
 };
 
 //Функция добавления карточки

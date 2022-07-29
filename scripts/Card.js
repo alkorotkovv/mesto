@@ -1,5 +1,6 @@
 //Импорт необходимых данных
 import {openPopup, popupCard, popupCardImage, popupCardCaption} from './index.js';
+import { Popup } from './Popup.js';
 
 //Класс карточки
 export class Card {
