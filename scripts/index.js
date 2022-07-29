@@ -33,11 +33,11 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 
 //const cardsList = document.querySelector('.elements__cards');
 
-const initSection = new Section(
+const cardsSection = new Section(
     {
       items: initialCards,
       renderer: (item) => {
-        initSection.addItem(generateCard(item));
+        cardsSection.addItem(generateCard(item));
       }
     },
     '.elements__cards'
@@ -92,7 +92,7 @@ function formAddSubmitHandler (evt) {
     name: placeInput.value,
     link: urlInput.value
   };
-  initSection._renderer(cardData);
+  cardsSection._renderer(cardData);
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   popupAdd.close();
 };
@@ -114,8 +114,8 @@ function generateCard(cardData) {
 
 //Функция инициализации первых 6ти карточек
 function initCards() {
-  initSection.clear();
-  initSection.renderItems();
+  cardsSection.clear();
+  cardsSection.renderItems();
 };
 
 
