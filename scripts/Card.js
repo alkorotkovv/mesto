@@ -12,18 +12,10 @@ export class Card {
     this._handleCardClick = handleCardClick;
   };
 
-
-  _handleCardClick(name, link) {
-    this._openPopupCard;
-    console.log("handle")
-  }
-
-
   //Метод получения шаблона карточки
   _getTemplate() {
     return document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
   };
-
 
   //Метод лайка
   _like() {
@@ -31,15 +23,12 @@ export class Card {
     this._isLiked = !this._isLiked;
   };
 
+  /*
   //Метод открытия попапа карточки
   _openPopupCard() {
-    //popupCardImage.src = this._link;
-    //popupCardImage.alt = 'попап ' + this._name;
-    //popupCardCaption.textContent = this._name;
-    //console.log(this);
-    popupCard.open();
-    //openPopup(popupCard);
+    popupCard.open(this._name, this._link);
   };
+  */
 
   //Метод удаления карточки
   _deleteCard() {
@@ -54,7 +43,6 @@ export class Card {
     });
 
     this._cardImageElement.addEventListener('click', () => {
-      //console.log(this._handleCardClick)
       this._handleCardClick();
     });
 

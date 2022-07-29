@@ -8,12 +8,12 @@ export class PopupWithImage extends Popup {
     this._popupCardCaption = this._popupElement.querySelector('.card-scale__caption');
   };
 
-  open() {
+  //Метод открытия попапа с заполнением ссылки и подписи
+  open(name, link) {
     super.open();
-    console.log("ffff" + this);
-    //this._popupCardImage.src = this._link;
-    //this._popupCardImage.alt = 'попап ' + this._name;
-    //this._popupCardCaption.textContent = this._name;
+    this._popupCardImage.src = link;
+    this._popupCardImage.alt = 'попап ' + name;
+    this._popupCardCaption.textContent = name;
   };
 
 }

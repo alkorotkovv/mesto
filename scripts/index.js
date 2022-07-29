@@ -155,33 +155,16 @@ function generateCard(cardData) {
     cardData,
     '#cardTemplate',
     {
-      handleCardClick: (card) => {
-        console.log(card);
-        popupCard.open();
+      handleCardClick: () => {
+        popupCard.open(card._name, card._link);
+        //card._openPopupCard();
+        //console.log(card._name);
       }
     }
   );
 
-
   return card.createCardElement();
 };
-
-/*
-const initSection = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      initSection.addItem(generateCard(item));
-    }
-  },
-  '.elements__cards'
-);
-*/
-
-
-
-
-
 
 
 
