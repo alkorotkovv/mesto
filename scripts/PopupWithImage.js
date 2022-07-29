@@ -1,18 +1,19 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithImage extends Popup {
-
-
-
-
-
+  constructor(popupSelector)
+  {
+    super(popupSelector);
+    this._popupCardImage = this._popupElement.querySelector('.card-scale__image');
+    this._popupCardCaption = this._popupElement.querySelector('.card-scale__caption');
+  };
 
   open() {
-    console.log("opennnnn")
-    this._popupElement = document.querySelector(this._popupSelector);
-    this.setEventListeners();
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
-    this._popupElement.classList.add('popup_opened');
+    super.open();
+    console.log("ffff" + this);
+    //this._popupCardImage.src = this._link;
+    //this._popupCardImage.alt = 'попап ' + this._name;
+    //this._popupCardCaption.textContent = this._name;
   };
 
 }

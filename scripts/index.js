@@ -14,7 +14,7 @@ const page = document.querySelector('.page');
 const popupList = page.querySelectorAll('.popup');
 //const popupEdit = page.querySelector('.popup_type_edit');
 //const popupAdd = page.querySelector('.popup_type_add');
-export const popupCard = page.querySelector('.popup_type_card');
+//export const popupCard = page.querySelector('.popup_type_card');
 
 export const popupCardImage = page.querySelector('.card-scale__image');
 export const popupCardCaption = page.querySelector('.card-scale__caption');
@@ -46,8 +46,8 @@ const initSection = new Section(
 
 const user = new UserInfo('.profile__title','.profile__subtitle');
 const popupEdit = new PopupWithForm('.popup_type_edit', formEditSubmitHandler);
-const popupAdd = new PopupWithForm('.popup_type_add');
-//const popupCard = new Popup('.popup_type_card');
+const popupAdd = new PopupWithForm('.popup_type_add', formAddSubmitHandler);
+export const popupCard = new PopupWithImage('.popup_type_card');
 
 /*
 //Функция получения открытого попапа
@@ -115,17 +115,12 @@ function openPopupEdit() {
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   popupEdit.open();
-  //openPopup(popupEdit);
 };
 
 //Функция открытия попапа добавления карточки
 function openPopupAdd() {
   popupAdd.open();
-  //openPopup(popupAdd);
 };
-
-
-
 
 
 
@@ -135,40 +130,65 @@ function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
   const { name, job } = popupEdit.getInputValues();
   user.setUserInfo(name, job);
-  //nameProfile.textContent = nameInput.value;
-  //jobProfile.textContent = jobInput.value;
-  //closePopup(popupEdit);
   popupEdit.close();
 };
 
 //Обработчик добавления новой карточки
 function formAddSubmitHandler (evt) {
   evt.preventDefault();
-
   const cardData = {
     name: placeInput.value,
     link: urlInput.value
   };
-  insertCard(generateCard(cardData));
-  formAdd.reset();  //Очищаем поля формы
+
+  initSection._renderer(cardData);
+
+  //insertCard(generateCard(cardData));
+  //formAdd.reset();  //Очищаем поля формы
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   popupAdd.close();
-  //closePopup(popupAdd);
 };
 
 //Функция добавления карточки
 function generateCard(cardData) {
-  const card = new Card(cardData, '#cardTemplate');
+  const card = new Card(
+    cardData,
+    '#cardTemplate',
+    {
+      handleCardClick: (card) => {
+        console.log(card);
+        popupCard.open();
+      }
+    }
+  );
+
+
   return card.createCardElement();
 };
 
-
 /*
-//Функция вставки карточки в разметку
-function insertCard(cardElement) {
-  cardsList.prepend(cardElement);
-};
+const initSection = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      initSection.addItem(generateCard(item));
+    }
+  },
+  '.elements__cards'
+);
 */
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Функция инициализации первых 6ти карточек
 function initCards() {
@@ -211,7 +231,7 @@ buttonClosePopupList.forEach((buttonElement) => {
 //formEdit.addEventListener('submit', formEditSubmitHandler);
 
 //Слушатель для кнопки создания новой карточки в попапе
-formAdd.addEventListener('submit', formAddSubmitHandler);
+//formAdd.addEventListener('submit', formAddSubmitHandler);
 
 /*
 //Добавляем слушатели на все попапы (для закрытия попапа кликом на оверлей или крестик)

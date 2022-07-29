@@ -1,16 +1,22 @@
 //Импорт необходимых данных
 import {openPopup, popupCard, popupCardImage, popupCardCaption} from './index.js';
-import { Popup } from './Popup.js';
 
 //Класс карточки
 export class Card {
-  constructor(data, cardSelector)
+  constructor(data, cardSelector, {handleCardClick})
   {
     this._name = data.name;
     this._link = data.link;
     this._isLiked = false;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   };
+
+
+  _handleCardClick(name, link) {
+    this._openPopupCard;
+    console.log("handle")
+  }
 
 
   //Метод получения шаблона карточки
@@ -27,10 +33,12 @@ export class Card {
 
   //Метод открытия попапа карточки
   _openPopupCard() {
-    popupCardImage.src = this._link;
-    popupCardImage.alt = 'попап ' + this._name;
-    popupCardCaption.textContent = this._name;
-    openPopup(popupCard);
+    //popupCardImage.src = this._link;
+    //popupCardImage.alt = 'попап ' + this._name;
+    //popupCardCaption.textContent = this._name;
+    //console.log(this);
+    popupCard.open();
+    //openPopup(popupCard);
   };
 
   //Метод удаления карточки
@@ -46,7 +54,8 @@ export class Card {
     });
 
     this._cardImageElement.addEventListener('click', () => {
-      this._openPopupCard();
+      //console.log(this._handleCardClick)
+      this._handleCardClick();
     });
 
     this._cardDeleteElement.addEventListener('click', () => {
