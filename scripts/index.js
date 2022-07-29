@@ -6,6 +6,7 @@ import { UserInfo } from "./UserInfo.js";
 import { Popup } from "./Popup.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { PopupWithImage } from "./PopupWithImage.js";
+import { Section } from "./Section.js";
 
 //Блок объявления переменных
 const page = document.querySelector('.page');
@@ -33,18 +34,20 @@ const urlInput = formAdd.querySelector('.form__input_content_url');
 
 const cardsList = document.querySelector('.elements__cards');
 
+const initSection = new Section(
+    {
+      items: initialCards,
+      renderer: (item) => {
+        initSection.addItem(generateCard(item));
+      }
+    },
+    '.elements__cards'
+  );
+
 const user = new UserInfo('.profile__title','.profile__subtitle');
 const popupEdit = new PopupWithForm('.popup_type_edit', formEditSubmitHandler);
 const popupAdd = new PopupWithForm('.popup_type_add');
 //const popupCard = new Popup('.popup_type_card');
-
-
-
-function gg() {
-  console.log("gg");
-}
-
-
 
 /*
 //Функция получения открытого попапа
@@ -159,17 +162,18 @@ function generateCard(cardData) {
   return card.createCardElement();
 };
 
+
+/*
 //Функция вставки карточки в разметку
 function insertCard(cardElement) {
   cardsList.prepend(cardElement);
 };
+*/
 
 //Функция инициализации первых 6ти карточек
 function initCards() {
-  initialCards.forEach((cardData) => {
-    const cardElement = generateCard(cardData);
-    insertCard(cardElement);
-  });
+  initSection.clear();
+  initSection.renderItems();
 };
 
 
