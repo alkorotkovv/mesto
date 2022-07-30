@@ -1,4 +1,4 @@
-import {nameProfile, jobProfile} from './index.js';
+import { nameProfile, jobProfile } from '../utils/constants.js';
 
 //Класс для работы с данными пользователя
 export class UserInfo {

@@ -7,14 +7,17 @@ export class Section {
     this._container = document.querySelector(containerSelector);
   };
 
+  //Метод добавления элемента в разметку
   addItem(element) {
     this._container.prepend(element);
   };
 
+  //Метод очистки контейнера
   clear() {
     this._container.innerHTML = '';
   };
 
+  //Метод рендеринга
   renderItems() {
     this.clear();
     this._renderedItems.forEach((item) => {

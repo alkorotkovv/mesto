@@ -1,72 +1,37 @@
 //Импорт необходимых данных
-import { initialCards, validateList } from "./constants.js";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import { UserInfo } from "./UserInfo.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { Section } from "./Section.js";
+import { initialCards, validateList } from "../utils/constants.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { Section } from "../components/Section.js";
+import { formEdit, formAdd, buttonProfileEdit,
+buttonProfileAdd, nameInput, jobInput,
+placeInput, urlInput} from "../utils/constants.js";
 
-//Блок объявления переменных
-const page = document.querySelector('.page');
-
-//const popupList = page.querySelectorAll('.popup');
-//const popupEdit = page.querySelector('.popup_type_edit');
-//const popupAdd = page.querySelector('.popup_type_add');
-//export const popupCard = page.querySelector('.popup_type_card');
-
-export const popupCardImage = page.querySelector('.card-scale__image');
-export const popupCardCaption = page.querySelector('.card-scale__caption');
-
-const formEdit = page.querySelector('.form_profile_edit');
-const formAdd = page.querySelector('.form_card_add');
-const buttonProfileEdit = page.querySelector('.profile__edit-button');
-const buttonProfileAdd = page.querySelector('.profile__add-button');
-
-export const nameProfile = page.querySelector('.profile__title');
-export const jobProfile = page.querySelector('.profile__subtitle');
-const nameInput = formEdit.querySelector('.form__input_content_name');
-const jobInput = formEdit.querySelector('.form__input_content_job');
-
-const placeInput = formAdd.querySelector('.form__input_content_place');
-const urlInput = formAdd.querySelector('.form__input_content_url');
-
-//const cardsList = document.querySelector('.elements__cards');
-
+//Создание необходимых экземпляров классов
 const cardsSection = new Section(
-    {
-      items: initialCards,
-      renderer: (item) => {
-        cardsSection.addItem(generateCard(item));
-      }
-    },
-    '.elements__cards'
-  );
-
+  {
+    items: initialCards,
+    renderer: (item) => {
+      cardsSection.addItem(generateCard(item));
+    }
+  },
+  '.elements__cards'
+);
 const user = new UserInfo('.profile__title','.profile__subtitle');
 const popupEdit = new PopupWithForm('.popup_type_edit', formEditSubmitHandler);
 const popupAdd = new PopupWithForm('.popup_type_add', formAddSubmitHandler);
-export const popupCard = new PopupWithImage('.popup_type_card');
+const popupCard = new PopupWithImage('.popup_type_card');
 
-/*
-//Функция получения открытого попапа
-function getOpenedPopup() {
-  return new Popup('.popup_opened');
-  return page.querySelector('.popup_opened');
-};
-*/
 
-//Функция открытия попапа
-export function openPopup(popupElement) {
-  popupElement.classList.add('popup_opened');
-  //document.addEventListener('keydown', closePopupByKeyPress);
-};
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-  const userObject = user.getUserInfo();
-  nameInput.value = userObject.name;  //заполняем поля ввода данными из профиля
-  jobInput.value = userObject.job;
+  const { name, job } = user.getUserInfo(); //деструктуризация
+  nameInput.value = name;  //заполняем поля ввода данными из профиля
+  jobInput.value = job;
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   popupEdit.open();
@@ -80,7 +45,7 @@ function openPopupAdd() {
 //Обработчик отправки формы редактирования профиля
 function formEditSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  const { name, job } = popupEdit.getInputValues();
+  const { name, job } = popupEdit.getInputValues(); //деструктуризация
   user.setUserInfo(name, job);
   popupEdit.close();
 };
@@ -97,7 +62,7 @@ function formAddSubmitHandler (evt) {
   popupAdd.close();
 };
 
-//Функция добавления карточки
+//Функция генерирования карточки
 function generateCard(cardData) {
   const card = new Card(
     cardData,
@@ -135,6 +100,5 @@ initCards();
 //Создаем валидаторы для форм
 const formEditValidator = new FormValidator(validateList, formEdit);
 formEditValidator.enableValidation();
-
 const formAddValidator = new FormValidator(validateList, formAdd);
 formAddValidator.enableValidation();
