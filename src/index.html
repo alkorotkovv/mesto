@@ -3,21 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
+    <!--<link rel="stylesheet" href="./pages/index.css" />-->
     <title>Место</title>
   </head>
 
   <body class="page">
 
       <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="логотип"/>
+        <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="логотип"/>
       </header>
 
       <main class="content">
 
         <section class="profile">
           <div class="profile__main">
-            <img class="profile__image" src="./images/image.jpg" alt="аватар">
+            <img class="profile__image" src="<%=require('./images/image.jpg')%>" alt="аватар">
             <div class="profile__info">
               <div class="profile__name-line">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -106,7 +106,7 @@
       </li>
     </template>
 
-
+    <!--
     <script type='module' src="./utils/constants.js"></script>
     <script type='module' src="./pages/index.js"></script>
     <script type='module' src="./components/Card.js"></script>
@@ -115,6 +115,7 @@
     <script type='module' src="./components/Popup.js"></script>
     <script type='module' src="./components/PopupWithImage.js"></script>
     <script type='module' src="./components/PopupWithForm.js"></script>
+    -->
   </body>
 
 </html>

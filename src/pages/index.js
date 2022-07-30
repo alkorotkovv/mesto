@@ -1,3 +1,6 @@
+//Импорт стилей для сборки Вебпаком
+import './index.css';
+
 //Импорт необходимых данных
 import { initialCards, validateList } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
