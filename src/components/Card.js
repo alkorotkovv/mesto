@@ -4,7 +4,6 @@ export class Card {
   {
     this._name = data.name;
     this._link = data.link;
-    this._isLiked = false;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
   };
@@ -17,7 +16,6 @@ export class Card {
   //Метод лайка
   _like() {
     this._cardLikeElement.classList.toggle('card__like_active');
-    this._isLiked = !this._isLiked;
   };
 
   /*

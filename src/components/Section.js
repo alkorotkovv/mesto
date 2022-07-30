@@ -19,7 +19,6 @@ export class Section {
 
   //Метод рендеринга
   renderItems() {
-    this.clear();
     this._renderedItems.forEach((item) => {
       this._renderer(item);
     });

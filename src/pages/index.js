@@ -24,9 +24,12 @@ const cardsSection = new Section(
   '.elements__cards'
 );
 const user = new UserInfo('.profile__title','.profile__subtitle');
-const popupEdit = new PopupWithForm('.popup_type_edit', formEditSubmitHandler);
-const popupAdd = new PopupWithForm('.popup_type_add', formAddSubmitHandler);
+const popupEdit = new PopupWithForm('.popup_type_edit', handleSubmitFormEdit);
+popupEdit.setEventListeners();
+const popupAdd = new PopupWithForm('.popup_type_add', handleSubmitFormAdd);
+popupAdd.setEventListeners();
 const popupCard = new PopupWithImage('.popup_type_card');
+popupCard.setEventListeners();
 
 
 
@@ -46,21 +49,17 @@ function openPopupAdd() {
 };
 
 //Обработчик отправки формы редактирования профиля
-function formEditSubmitHandler (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы. Так мы можем определить свою логику отправки. О том, как это делать, расскажем позже.
-  const { name, job } = popupEdit.getInputValues(); //деструктуризация
-  user.setUserInfo(name, job);
+function handleSubmitFormEdit (inputValuesObject) {
+  const { name, job } = inputValuesObject;
+  user.setUserInfo({name: name, job: job});
   popupEdit.close();
 };
 
 //Обработчик добавления новой карточки
-function formAddSubmitHandler (evt) {
-  evt.preventDefault();
-  const cardData = {
-    name: placeInput.value,
-    link: urlInput.value
-  };
-  cardsSection._renderer(cardData);
+function handleSubmitFormAdd (inputValuesObject) {
+  const { place, url } = inputValuesObject;
+  cardsSection.addItem(generateCard({name: place, link: url}));
+  //cardsSection.addItem(generateCard({name: place, link: url}));
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   popupAdd.close();
 };
