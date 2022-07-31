@@ -15,12 +15,6 @@ export class UserInfo {
     };
   };
 
-  //Метод заполняющий поля формы данными пользователя
-  setUserInfo(name, job) {
-    this._name.textContent = name;
-    this._job.textContent = job;
-  };
-
   setUserInfo(infoObject) {
     this._name.textContent = infoObject.name;
     this._job.textContent = infoObject.job;

@@ -50,8 +50,9 @@ function openPopupAdd() {
 
 //Обработчик отправки формы редактирования профиля
 function handleSubmitFormEdit (inputValuesObject) {
-  const { name, job } = inputValuesObject;
-  user.setUserInfo({name: name, job: job});
+  //const { name, job } = inputValuesObject;
+  //user.setUserInfo({name: name, job: job});
+  user.setUserInfo(inputValuesObject);
   popupEdit.close();
 };
 
