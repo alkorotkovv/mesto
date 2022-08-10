@@ -15,17 +15,6 @@ buttonProfileAdd, nameInput, jobInput } from "../utils/constants.js";
 
 
 //Создание необходимых экземпляров классов
-/*
-const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      cardsSection.addItem(generateCard(item));
-    }
-  },
-  '.elements__cards'
-);
-*/
 const user = new UserInfo('.profile__title','.profile__subtitle');
 const popupEdit = new PopupWithForm('.popup_type_edit', handleSubmitFormEdit);
 popupEdit.setEventListeners();
@@ -42,9 +31,15 @@ const api = new Api({
   }
 });
 
-
-
-
+const newCardsSection = new Section(
+  {
+    items: {},
+    renderer: (item) => {
+      newCardsSection.addItem(generateCard(item));
+    }
+  },
+  '.elements__cards'
+);
 
 
 
@@ -68,14 +63,21 @@ function openPopupAdd() {
 function handleSubmitFormEdit (inputValuesObject) {
   //const { name, job } = inputValuesObject;
   //user.setUserInfo({name: name, job: job});
-  user.setUserInfo(inputValuesObject);
+  api.setUserInfo(inputValuesObject).then(res => {
+    //console.log(res);
+    const infoObject = {name: res.name, job: res.about};
+    user.setUserInfo(infoObject);
+  });
   popupEdit.close();
 };
 
 //Обработчик добавления новой карточки
 function handleSubmitFormAdd (inputValuesObject) {
   const { place, url } = inputValuesObject;
-  cardsSection.addItem(generateCard({name: place, link: url}));
+  api.addCard({name: place, link: url}).then(res => {
+    console.log(res);
+    newCardsSection.addItem(generateCard({name: res.name, link: res.link}));
+  });
   //cardsSection.addItem(generateCard({name: place, link: url}));
   formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   popupAdd.close();
@@ -100,18 +102,18 @@ function generateCard(cardData) {
 function initCards() {
   api.getInitialCards().then(res => {
     //console.log(res);
-    const cardsSection = new Section(
+    const initCardsSection = new Section(
       {
         items: res,
         renderer: (item) => {
-          cardsSection.addItem(generateCard(item));
+          initCardsSection.addItem(generateCard(item));
         }
       },
       '.elements__cards'
     );
     //console.log(cardsSectionNew);
-    cardsSection.clear();
-    cardsSection.renderItems();
+    initCardsSection.clear();
+    initCardsSection.renderItems();
     }
   );
 };

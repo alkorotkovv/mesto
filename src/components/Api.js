@@ -25,8 +25,6 @@ export class Api {
     )
     .then(result => {
       //console.log(result);
-      //UserObject = {name: result.name, job: result.about};
-      //console.log(UserObject);
       return {name: result.name, job: result.about};
     })
   };
@@ -36,26 +34,65 @@ export class Api {
       method: 'GET',
       headers: {
         authorization: this._authorization
-        }
-      })
-      .then(res => {
-        if (res.ok)
-          return res.json()
-        }
-      )
-      .then(result => {
-        console.log(result);
-        return result;
-        //UserObject = {name: result.name, job: result.about};
-        //console.log(UserObject);
-        //return {name: result.name, job: result.about};
-      })
-
+      }
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
   };
 
+  setUserInfo(inputValuesObject) {
+    //console.log("fff");
+    return fetch(this._baseUrl + 'users/me', {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: `${inputValuesObject.name}`,
+        about: `${inputValuesObject.job}`
+      })
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
+  };
 
-
-
+  addCard(cardData) {
+    return fetch(this._baseUrl + 'cards', {
+      method: 'POST',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: `${cardData.name}`,
+        link: `${cardData.link}`
+      })
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
+  };
 
 
 
