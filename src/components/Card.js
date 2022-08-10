@@ -1,11 +1,16 @@
 //Класс карточки
 export class Card {
-  constructor(data, cardSelector, {handleCardClick})
+  constructor(data, cardSelector, username, {handleCardClick, handleDeleteClick})
   {
+    console.log(data);
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
+    this._owner = data.owner;
+    this._username = username;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
   };
 
   //Метод получения шаблона карточки
@@ -18,12 +23,19 @@ export class Card {
     this._cardLikeElement.classList.toggle('card__like_active');
   };
 
+  _toggleDeleteIcon() {
+    console.log(this._owner);
+    if (this._username !== this._owner.name)
+      this._cardDeleteElement.classList.add('card__delete_hidden');
+  };
+
   /*
   //Метод открытия попапа карточки
   _openPopupCard() {
     popupCard.open(this._name, this._link);
   };
   */
+
 
   //Метод удаления карточки
   _deleteCard() {
@@ -42,7 +54,8 @@ export class Card {
     });
 
     this._cardDeleteElement.addEventListener('click', () => {
-      this._deleteCard();
+      //this._deleteCard();
+      this._handleDeleteClick(this._id);
     });
   };
 
@@ -57,7 +70,9 @@ export class Card {
     this._cardNameElement.textContent = this._name;
     this._cardImageElement.src = this._link;
     this._cardImageElement.alt = 'фотография ' + this._name;
+    //this._toggleDeleteIcon();
     this._setEventListeners();
+
     //console.log(this._cardElement)
     return this._cardElement;
   };

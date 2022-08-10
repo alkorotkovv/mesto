@@ -8,6 +8,7 @@ import { FormValidator } from "../components/FormValidator.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithQuestion } from "../components/PopupWithQuestion.js";
 import { Section } from "../components/Section.js";
 import { Api } from "../components/Api.js";
 import { formEdit, formAdd, buttonProfileEdit,
@@ -22,6 +23,8 @@ const popupAdd = new PopupWithForm('.popup_type_add', handleSubmitFormAdd);
 popupAdd.setEventListeners();
 const popupCard = new PopupWithImage('.popup_type_card');
 popupCard.setEventListeners();
+const popupDelete = new PopupWithQuestion('.popup_type_delete', handleSubmitFormDelete);
+popupDelete.setEventListeners();
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-48/',
@@ -41,6 +44,9 @@ const newCardsSection = new Section(
   '.elements__cards'
 );
 
+
+
+//api.deleteCard("62f3a9fcea92a50c67fed131");
 
 
 
@@ -75,7 +81,7 @@ function handleSubmitFormEdit (inputValuesObject) {
 function handleSubmitFormAdd (inputValuesObject) {
   const { place, url } = inputValuesObject;
   api.addCard({name: place, link: url}).then(res => {
-    console.log(res);
+    //console.log(res);
     newCardsSection.addItem(generateCard({name: res.name, link: res.link}));
   });
   //cardsSection.addItem(generateCard({name: place, link: url}));
@@ -83,15 +89,27 @@ function handleSubmitFormAdd (inputValuesObject) {
   popupAdd.close();
 };
 
+//Обработчик удаления карточки в попапе
+function handleSubmitFormDelete (cardID) {
+  console.log("нажали кнопку да");
+  console.log(cardID);
+  api.deleteCard(cardID);
+  popupDelete.close();
+};
+
 //Функция генерирования карточки
 function generateCard(cardData) {
   const card = new Card(
     cardData,
     '#cardTemplate',
+    user.getUserInfo().name,
     {
       handleCardClick: () => {
         popupCard.open(card._name, card._link);
-      }
+      },
+      handleDeleteClick: () => {
+        popupDelete.open(card._id);
+      },
     }
   );
 
@@ -101,7 +119,8 @@ function generateCard(cardData) {
 //Функция инициализации первых карточек
 function initCards() {
   api.getInitialCards().then(res => {
-    //console.log(res);
+    console.log(res);
+    res.reverse();  //переворачиваем массив карточек, тк выводятся в обратном порядке
     const initCardsSection = new Section(
       {
         items: res,

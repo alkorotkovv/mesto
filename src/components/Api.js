@@ -94,7 +94,24 @@ export class Api {
     })
   };
 
-
+  deleteCard(cardID) {
+    return fetch(this._baseUrl + 'cards/' + cardID, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
+  }
 
 
 

@@ -3,6 +3,7 @@
   height: 19px;
   margin: 0;
   padding: 0;
+  display: flex;
   border: none;
   background: none;
   background-image: url(../../../images/urn.svg);
