@@ -9,11 +9,13 @@ import { UserInfo } from "../components/UserInfo.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { Section } from "../components/Section.js";
+import { Api } from "../components/Api.js";
 import { formEdit, formAdd, buttonProfileEdit,
-buttonProfileAdd, nameInput, jobInput,
-placeInput, urlInput} from "../utils/constants.js";
+buttonProfileAdd, nameInput, jobInput } from "../utils/constants.js";
+
 
 //Создание необходимых экземпляров классов
+/*
 const cardsSection = new Section(
   {
     items: initialCards,
@@ -23,6 +25,7 @@ const cardsSection = new Section(
   },
   '.elements__cards'
 );
+*/
 const user = new UserInfo('.profile__title','.profile__subtitle');
 const popupEdit = new PopupWithForm('.popup_type_edit', handleSubmitFormEdit);
 popupEdit.setEventListeners();
@@ -30,6 +33,19 @@ const popupAdd = new PopupWithForm('.popup_type_add', handleSubmitFormAdd);
 popupAdd.setEventListeners();
 const popupCard = new PopupWithImage('.popup_type_card');
 popupCard.setEventListeners();
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-48/',
+  headers: {
+    authorization: '9c8b2d65-20ac-4a2a-9a38-45ba5cd9db7f',
+    'Content-Type': 'application/json'
+  }
+});
+
+
+
+
+
 
 
 
@@ -80,10 +96,24 @@ function generateCard(cardData) {
   return card.createCardElement();
 };
 
-//Функция инициализации первых 6ти карточек
+//Функция инициализации первых карточек
 function initCards() {
-  cardsSection.clear();
-  cardsSection.renderItems();
+  api.getInitialCards().then(res => {
+    //console.log(res);
+    const cardsSection = new Section(
+      {
+        items: res,
+        renderer: (item) => {
+          cardsSection.addItem(generateCard(item));
+        }
+      },
+      '.elements__cards'
+    );
+    //console.log(cardsSectionNew);
+    cardsSection.clear();
+    cardsSection.renderItems();
+    }
+  );
 };
 
 
@@ -96,6 +126,13 @@ buttonProfileEdit.addEventListener('click', openPopupEdit);
 buttonProfileAdd.addEventListener('click', openPopupAdd);
 
 
+
+
+//Заполнение информации о юзере данными с сервера
+api.getUserInfo().then(res => {
+  user.setUserInfo(res);
+  }
+);
 
 //Создаем карточки по умолчанию
 initCards();
