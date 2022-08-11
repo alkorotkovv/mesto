@@ -2,7 +2,7 @@
 import './index.css';
 
 //Импорт необходимых данных
-import { initialCards, validateList } from "../utils/constants.js";
+import { buttonAvatarEdit, formAvatar, initialCards, validateList } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { UserInfo } from "../components/UserInfo.js";
@@ -16,7 +16,7 @@ buttonProfileAdd, nameInput, jobInput } from "../utils/constants.js";
 
 
 //Создание необходимых экземпляров классов
-const user = new UserInfo('.profile__title','.profile__subtitle');
+const user = new UserInfo('.profile__title','.profile__subtitle', '.profile__image');
 const popupEdit = new PopupWithForm('.popup_type_edit', handleSubmitFormEdit);
 popupEdit.setEventListeners();
 const popupAdd = new PopupWithForm('.popup_type_add', handleSubmitFormAdd);
@@ -25,6 +25,8 @@ const popupCard = new PopupWithImage('.popup_type_card');
 popupCard.setEventListeners();
 const popupDelete = new PopupWithQuestion('.popup_type_delete', handleSubmitFormDelete);
 popupDelete.setEventListeners();
+const popupAvatar = new PopupWithForm('.popup_type_avatar', handleSubmitFormAvatar);
+popupAvatar.setEventListeners();
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-48/',
@@ -46,11 +48,16 @@ const newCardsSection = new Section(
 
 
 
-/*
-api.likeCard("62f4a1e59582a80c905863d9").then(res => {
-  console.log(res);
-});
-*/
+
+//api.setUserAvatar("https://images.unsplash.com/photo-1654474910190-1f921519f9c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+
+
+
+
+
+function openPopupAvatar() {
+  popupAvatar.open();
+};
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
@@ -67,12 +74,22 @@ function openPopupAdd() {
   popupAdd.open();
 };
 
+//Обработчик отправки формы редактирования аватара
+function handleSubmitFormAvatar (inputValuesObject) {
+  api.setUserAvatar(inputValuesObject).then(res => {
+    //console.log(res);
+    //const infoObject = {name: res.name, job: res.about};
+    user.setUserInfo(res);
+    popupAvatar.close();
+  });
+};
+
 //Обработчик отправки формы редактирования профиля
 function handleSubmitFormEdit (inputValuesObject) {
   api.setUserInfo(inputValuesObject).then(res => {
     //console.log(res);
-    const infoObject = {name: res.name, job: res.about};
-    user.setUserInfo(infoObject);
+    //const infoObject = {name: res.name, job: res.about};
+    user.setUserInfo(res);
     popupEdit.close();
   });
 };
@@ -153,11 +170,13 @@ buttonProfileEdit.addEventListener('click', openPopupEdit);
 //Слушатель для кнопки добавить карточку
 buttonProfileAdd.addEventListener('click', openPopupAdd);
 
-
+//Слушатель для кнопки редактировать аватар
+buttonAvatarEdit.addEventListener('click', openPopupAvatar);
 
 
 //Заполнение информации о юзере данными с сервера
 api.getUserInfo().then(res => {
+  //console.log(res)
   user.setUserInfo(res);
   }
 );
@@ -170,3 +189,5 @@ const formEditValidator = new FormValidator(validateList, formEdit);
 formEditValidator.enableValidation();
 const formAddValidator = new FormValidator(validateList, formAdd);
 formAddValidator.enableValidation();
+const formAvatarValidator = new FormValidator(validateList, formAvatar);
+formAvatarValidator.enableValidation();

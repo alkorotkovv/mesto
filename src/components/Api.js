@@ -10,7 +10,7 @@ export class Api {
   };
 
 
-
+  //Метод получения данных пользователя
   getUserInfo() {
     return fetch(this._baseUrl + 'users/me', {
     method: 'GET',
@@ -25,10 +25,11 @@ export class Api {
     )
     .then(result => {
       //console.log(result);
-      return {name: result.name, job: result.about};
+      return result;
     })
   };
 
+  //Метод получения инициализируемых карточек
   getInitialCards() {
     return fetch(this._baseUrl + 'cards', {
       method: 'GET',
@@ -47,6 +48,7 @@ export class Api {
     })
   };
 
+  //Метод изменения данных пользователя
   setUserInfo(inputValuesObject) {
     //console.log("fff");
     return fetch(this._baseUrl + 'users/me', {
@@ -71,6 +73,7 @@ export class Api {
     })
   };
 
+  //Метод добавления новой карточки
   addCard(cardData) {
     return fetch(this._baseUrl + 'cards', {
       method: 'POST',
@@ -94,6 +97,7 @@ export class Api {
     })
   };
 
+  //Метод удаления карточки
   deleteCard(cardID) {
     return fetch(this._baseUrl + 'cards/' + cardID, {
       method: 'DELETE',
@@ -113,10 +117,9 @@ export class Api {
     })
   }
 
-
+  //Метод установки/снятия лайка
   toggleLikeCard(cardID, isLiked) {
     let method = isLiked ? 'DELETE':'PUT';
-    console.log(method);
     return fetch(this._baseUrl + 'cards/' + cardID + '/likes', {
       method: method,
       headers: {
@@ -136,5 +139,26 @@ export class Api {
   }
 
 
+  setUserAvatar(avatar) {
+    return fetch(this._baseUrl + 'users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: `${avatar.url}`
+      })
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
+  }
 
 }

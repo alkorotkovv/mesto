@@ -2,8 +2,10 @@
 export const page = document.querySelector('.page');
 export const formEdit = page.querySelector('.form_profile_edit');
 export const formAdd = page.querySelector('.form_card_add');
+export const formAvatar = page.querySelector('.form_avatar_edit');
 export const buttonProfileEdit = page.querySelector('.profile__edit-button');
 export const buttonProfileAdd = page.querySelector('.profile__add-button');
+export const buttonAvatarEdit = page.querySelector('.profile__avatar');
 export const nameInput = formEdit.querySelector('.form__input_content_name');
 export const jobInput = formEdit.querySelector('.form__input_content_job');
 export const placeInput = formAdd.querySelector('.form__input_content_place');
