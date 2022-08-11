@@ -114,7 +114,26 @@ export class Api {
   }
 
 
-
+  toggleLikeCard(cardID, isLiked) {
+    let method = isLiked ? 'DELETE':'PUT';
+    console.log(method);
+    return fetch(this._baseUrl + 'cards/' + cardID + '/likes', {
+      method: method,
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => {
+      if (res.ok)
+        return res.json()
+      }
+    )
+    .then(result => {
+      //console.log(result);
+      return result;
+    })
+  }
 
 
 

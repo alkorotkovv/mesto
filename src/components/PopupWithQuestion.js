@@ -10,11 +10,14 @@ export class PopupWithQuestion extends Popup {
   };
 
   //Метод открытия попапа с заполнением ссылки и подписи
-  open(cardID) {
+  open(card) {
     super.open();
     console.log("попап открылся");
-    console.log(cardID)
-    this._cardID = cardID;
+    console.log(card);
+    //console.log(card._cardElement);
+    this._card = card;
+    this._cardID = card._id;
+    this._cardElement = card._cardElement;
   };
 
   setEventListeners() {
@@ -22,7 +25,7 @@ export class PopupWithQuestion extends Popup {
     this._form.addEventListener('submit', (evt) => {
       console.log("да")
       evt.preventDefault(); //отменяем стандартную отправку формы
-      this._formSubmitHandler(this._cardID);
+      this._formSubmitHandler(this._card);
     });
   };
 

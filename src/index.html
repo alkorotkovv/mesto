@@ -17,7 +17,9 @@
 
         <section class="profile">
           <div class="profile__main">
-            <img class="profile__image" src="<%=require('./images/image.jpg')%>" alt="аватар">
+            <div class="profile__avatar">
+              <img class="profile__image" src="<%=require('./images/image.jpg')%>" alt="аватар">
+            </div>
             <div class="profile__info">
               <div class="profile__name-line">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -110,7 +112,10 @@
         <img class="card__image" src="./images/elbrus.jpg" alt="фотография">
         <div class="card__description">
           <h2 class="card__title">Гора Эльбрус</h2>
-          <button class="card__like" type="button" aria-label="Like"></button>
+          <div class="card__likes">
+            <button class="card__like" type="button" aria-label="Like"></button>
+            <p class="card__count">100</p>
+          </div>
         </div>
         <button class="card__delete" type="button" aria-label="Delete"></button>
       </li>

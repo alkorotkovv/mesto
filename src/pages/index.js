@@ -46,9 +46,11 @@ const newCardsSection = new Section(
 
 
 
-//api.deleteCard("62f3a9fcea92a50c67fed131");
-
-
+/*
+api.likeCard("62f4a1e59582a80c905863d9").then(res => {
+  console.log(res);
+});
+*/
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
@@ -67,14 +69,12 @@ function openPopupAdd() {
 
 //Обработчик отправки формы редактирования профиля
 function handleSubmitFormEdit (inputValuesObject) {
-  //const { name, job } = inputValuesObject;
-  //user.setUserInfo({name: name, job: job});
   api.setUserInfo(inputValuesObject).then(res => {
     //console.log(res);
     const infoObject = {name: res.name, job: res.about};
     user.setUserInfo(infoObject);
+    popupEdit.close();
   });
-  popupEdit.close();
 };
 
 //Обработчик добавления новой карточки
@@ -82,19 +82,22 @@ function handleSubmitFormAdd (inputValuesObject) {
   const { place, url } = inputValuesObject;
   api.addCard({name: place, link: url}).then(res => {
     //console.log(res);
-    newCardsSection.addItem(generateCard({name: res.name, link: res.link}));
+    newCardsSection.addItem(generateCard(res));
+    popupAdd.close();
+    formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   });
-  //cardsSection.addItem(generateCard({name: place, link: url}));
-  formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
-  popupAdd.close();
 };
 
 //Обработчик удаления карточки в попапе
-function handleSubmitFormDelete (cardID) {
-  console.log("нажали кнопку да");
-  console.log(cardID);
-  api.deleteCard(cardID);
-  popupDelete.close();
+function handleSubmitFormDelete (card) {
+  //console.log(card);
+  api.deleteCard(card._id).then(res => {
+    //console.log(res);
+    card._deleteCard();
+    popupDelete.close();
+  })
+
+
 };
 
 //Функция генерирования карточки
@@ -102,24 +105,28 @@ function generateCard(cardData) {
   const card = new Card(
     cardData,
     '#cardTemplate',
-    user.getUserInfo().name,
+    user.getUserInfo(),
     {
       handleCardClick: () => {
         popupCard.open(card._name, card._link);
       },
       handleDeleteClick: () => {
-        popupDelete.open(card._id);
+        popupDelete.open(card);
       },
+      handleLikeClick: (isLiked) => {
+        api.toggleLikeCard(card._id, isLiked).then(res => {
+          card._toggleLike(res.likes);
+        })
+      }
     }
   );
-
   return card.createCardElement();
 };
 
 //Функция инициализации первых карточек
 function initCards() {
   api.getInitialCards().then(res => {
-    console.log(res);
+    //console.log(res);
     res.reverse();  //переворачиваем массив карточек, тк выводятся в обратном порядке
     const initCardsSection = new Section(
       {
@@ -156,7 +163,7 @@ api.getUserInfo().then(res => {
 );
 
 //Создаем карточки по умолчанию
-initCards();
+//initCards();
 
 //Создаем валидаторы для форм
 const formEditValidator = new FormValidator(validateList, formEdit);
