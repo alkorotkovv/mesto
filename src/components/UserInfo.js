@@ -2,23 +2,31 @@
 export class UserInfo {
   constructor(nameSelector, jobSelector, avatarSelector)
   {
-    this._name = document.querySelector(nameSelector);
-    this._job = document.querySelector(jobSelector);
-    this._avatar = document.querySelector(avatarSelector);
+    this._nameElement = document.querySelector(nameSelector);
+    this._jobElement = document.querySelector(jobSelector);
+    this._avatarElement = document.querySelector(avatarSelector);
   };
 
-  //Метод возвращающий объект имя,работа
+  //Метод возвращающий объект пользователя
   getUserInfo() {
     return {
-      name: this._name.textContent,
-      job: this._job.textContent
+      name: this._nameElement.textContent,
+      job: this._jobElement.textContent,
+      avatar: this._avatarElement.src,
+      _id: this._id
     };
   };
 
+  //Метод добавляющий в разметку информацию пользователя
   setUserInfo(infoObject) {
-    this._name.textContent = infoObject.name;
-    this._job.textContent = infoObject.about;
-    this._avatar.src = infoObject.avatar;
+    this._nameElement.textContent = infoObject.name;
+    this._jobElement.textContent = infoObject.about;
+    this._id = infoObject._id;
   };
 
+  //Метод добавляющий в разметку аватар пользователя (разбил установку аватара и информации на 2 разных метода,
+  //чтобы при изменении только одних из настроек, повторно не записывались вторые, тк попапы редактирования разные)
+  setUserAvatar(infoObject) {
+    this._avatarElement.src = infoObject.avatar;
+  };
 }

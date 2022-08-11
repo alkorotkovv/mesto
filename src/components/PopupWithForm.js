@@ -8,6 +8,7 @@ export class PopupWithForm extends Popup {
     this._formSubmitHandler = formSubmitHandler;
     this._form = this._popupElement.querySelector('.form');
     this._inputs = Array.from(this._form.querySelectorAll('.form__input'));
+    this._originalSubmitText = this._popupElement.querySelector('.form__save-button').textContent;
   };
 
   //Метод, возвращающий объект со значениями инпутов
@@ -30,5 +31,12 @@ export class PopupWithForm extends Popup {
     super.close();
     this._form.reset();  //Очищаем поля формы
   };
+
+  renderLoading(isLoading, text) {
+    if(isLoading)
+      this._popupElement.querySelector('.form__save-button').textContent = "Сохранение...";
+    else
+      this._popupElement.querySelector('.form__save-button').textContent = this._originalSubmitText;
+  }
 
 }

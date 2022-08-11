@@ -2,7 +2,6 @@
 import './index.css';
 
 //Импорт необходимых данных
-import { buttonAvatarEdit, formAvatar, initialCards, validateList } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { UserInfo } from "../components/UserInfo.js";
@@ -11,8 +10,8 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithQuestion } from "../components/PopupWithQuestion.js";
 import { Section } from "../components/Section.js";
 import { Api } from "../components/Api.js";
-import { formEdit, formAdd, buttonProfileEdit,
-buttonProfileAdd, nameInput, jobInput } from "../utils/constants.js";
+import { formEdit, formAdd, formAvatar, buttonProfileEdit,
+buttonProfileAdd, buttonAvatarEdit, nameInput, jobInput, validateList } from "../utils/constants.js";
 
 
 //Создание необходимых экземпляров классов
@@ -49,10 +48,11 @@ const newCardsSection = new Section(
 
 
 
-//api.setUserAvatar("https://images.unsplash.com/photo-1654474910190-1f921519f9c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
 
 
-
+function renderLoading(element, text) {
+    element.textContent = text;
+};
 
 
 function openPopupAvatar() {
@@ -76,30 +76,30 @@ function openPopupAdd() {
 
 //Обработчик отправки формы редактирования аватара
 function handleSubmitFormAvatar (inputValuesObject) {
+  popupAvatar.renderLoading(true);
   api.setUserAvatar(inputValuesObject).then(res => {
-    //console.log(res);
-    //const infoObject = {name: res.name, job: res.about};
-    user.setUserInfo(res);
+    user.setUserAvatar(res);
+    popupAvatar.renderLoading(false);
     popupAvatar.close();
   });
 };
 
 //Обработчик отправки формы редактирования профиля
 function handleSubmitFormEdit (inputValuesObject) {
+  popupEdit.renderLoading(true);
   api.setUserInfo(inputValuesObject).then(res => {
-    //console.log(res);
-    //const infoObject = {name: res.name, job: res.about};
     user.setUserInfo(res);
+    popupEdit.renderLoading(false);
     popupEdit.close();
   });
 };
 
 //Обработчик добавления новой карточки
 function handleSubmitFormAdd (inputValuesObject) {
-  const { place, url } = inputValuesObject;
-  api.addCard({name: place, link: url}).then(res => {
-    //console.log(res);
+  popupAdd.renderLoading(true);
+  api.addCard(inputValuesObject).then(res => {
     newCardsSection.addItem(generateCard(res));
+    popupAdd.renderLoading(false);
     popupAdd.close();
     formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   });
@@ -107,14 +107,11 @@ function handleSubmitFormAdd (inputValuesObject) {
 
 //Обработчик удаления карточки в попапе
 function handleSubmitFormDelete (card) {
-  //console.log(card);
-  api.deleteCard(card._id).then(res => {
+  api.deleteCard(card).then(res => {
     //console.log(res);
     card._deleteCard();
     popupDelete.close();
   })
-
-
 };
 
 //Функция генерирования карточки
@@ -122,7 +119,7 @@ function generateCard(cardData) {
   const card = new Card(
     cardData,
     '#cardTemplate',
-    user.getUserInfo(),
+    user.getUserInfo(),   //Передаем пользователя-создателя карточки
     {
       handleCardClick: () => {
         popupCard.open(card._name, card._link);
@@ -130,8 +127,8 @@ function generateCard(cardData) {
       handleDeleteClick: () => {
         popupDelete.open(card);
       },
-      handleLikeClick: (isLiked) => {
-        api.toggleLikeCard(card._id, isLiked).then(res => {
+      handleLikeClick: () => {
+        api.toggleLikeCard(card).then(res => {
           card._toggleLike(res.likes);
         })
       }
@@ -166,23 +163,21 @@ function initCards() {
 
 //Слушатель для кнопки редактировать профиль
 buttonProfileEdit.addEventListener('click', openPopupEdit);
-
 //Слушатель для кнопки добавить карточку
 buttonProfileAdd.addEventListener('click', openPopupAdd);
-
 //Слушатель для кнопки редактировать аватар
 buttonAvatarEdit.addEventListener('click', openPopupAvatar);
 
-
 //Заполнение информации о юзере данными с сервера
 api.getUserInfo().then(res => {
-  //console.log(res)
   user.setUserInfo(res);
+  user.setUserAvatar(res);
+  //Создаем карточки по умолчанию
+  initCards();
   }
 );
 
-//Создаем карточки по умолчанию
-//initCards();
+
 
 //Создаем валидаторы для форм
 const formEditValidator = new FormValidator(validateList, formEdit);

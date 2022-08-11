@@ -2,7 +2,6 @@
 export class Card {
   constructor(data, cardSelector, user, {handleCardClick, handleDeleteClick, handleLikeClick})
   {
-    //console.log(data);
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -13,8 +12,7 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
     this._handleLikeClick = handleLikeClick;
-
-    this._userLiked = this._likes.some(item => item.name === this._user.name);
+    this._userLiked = data.likes.some(item => item._id === this._user._id);   //переменная хранит true - пользователь ставил лайк, false - не ставил
   };
 
   //Метод получения шаблона карточки
@@ -22,31 +20,21 @@ export class Card {
     return document.querySelector(this._cardSelector).content.querySelector('.card').cloneNode(true);
   };
 
-  /*
-  //Метод лайка
-  _like() {
-    console.log("вызывали лайк" );
-    this._cardLikeElement.classList.toggle('card__like_active');
-
-      //item.name === this.user.name}))
-      //this._cardLikeElement.classList.toggle('card__like_active');
-
-  };
-*/
-
-  _paintLike() {
+  //Метод, закрашивающий лайк, если пользователь есть в списках лайкнувших
+  _initLike() {
     if (this._userLiked) this._cardLikeElement.classList.add('card__like_active');
   }
 
+  //Метод переключатель-обновлятель лайков
   _toggleLike(array) {
     this._cardCountElement.textContent = array.length;
     this._cardLikeElement.classList.toggle('card__like_active');
     this._userLiked = !this._userLiked;
   }
 
-  //Метод проверяющий принадлежность карточки текущему пользователю
-  _toggleDeleteIcon() {
-    if (this._user.name !== this._owner.name)
+  //Метод, показывающий корзину, если карточка создана пользователем
+  _initTrash() {
+    if (this._user._id !== this._owner._id)
       this._cardDeleteElement.classList.add('card__delete_hidden');
   };
 
@@ -59,8 +47,7 @@ export class Card {
   //Метод, добавляющий слушатели
   _setEventListeners() {
     this._cardLikeElement.addEventListener('click', () => {
-      //this._like();
-      this._handleLikeClick(this._userLiked);
+      this._handleLikeClick();
     });
 
     this._cardImageElement.addEventListener('click', () => {
@@ -68,7 +55,6 @@ export class Card {
     });
 
     this._cardDeleteElement.addEventListener('click', () => {
-      //this._deleteCard();
       this._handleDeleteClick(this);
     });
   };
@@ -86,9 +72,8 @@ export class Card {
     this._cardNameElement.textContent = this._name;
     this._cardImageElement.src = this._link;
     this._cardImageElement.alt = 'фотография ' + this._name;
-    //this._toggleLikes(this._likes);
-    this._toggleDeleteIcon();
-    this._paintLike();
+    this._initTrash();
+    this._initLike();
     this._setEventListeners();
 
     return this._cardElement;

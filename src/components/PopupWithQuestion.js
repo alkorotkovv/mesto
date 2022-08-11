@@ -12,9 +12,6 @@ export class PopupWithQuestion extends Popup {
   //Метод открытия попапа с заполнением ссылки и подписи
   open(card) {
     super.open();
-    console.log("попап открылся");
-    console.log(card);
-    //console.log(card._cardElement);
     this._card = card;
     this._cardID = card._id;
     this._cardElement = card._cardElement;
