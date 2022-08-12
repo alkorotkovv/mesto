@@ -3,7 +3,7 @@ export class FormValidator {
   constructor(validateSelectors, validateFormElement)
   {
     this._inputList = Array.from(validateFormElement.querySelectorAll(validateSelectors.inputSelector));
-    this._saveButton = validateFormElement.querySelector(validateSelectors.submitButtonSelector);
+    this._buttonSave = validateFormElement.querySelector(validateSelectors.submitButtonSelector);
     this._inactiveButtonClass = validateSelectors.inactiveButtonClass;
     this._inputErrorClass = validateSelectors.inputErrorClass;
     this._validateForm = validateFormElement;
@@ -53,14 +53,14 @@ export class FormValidator {
 
   //Метод для активации произвольной кнопки
   activateSaveButton() {
-    this._saveButton.classList.remove(this._inactiveButtonClass);
-    this._saveButton.disabled = false;
+    this._buttonSave.classList.remove(this._inactiveButtonClass);
+    this._buttonSave.disabled = false;
   };
 
   //Метод для деактивации произвольной кнопки
   deactivateSaveButton() {
-    this._saveButton.classList.add(this._inactiveButtonClass);
-    this._saveButton.disabled = true;
+    this._buttonSave.classList.add(this._inactiveButtonClass);
+    this._buttonSave.disabled = true;
   };
 
   //Метод проверки существования невалидного инпута на всей форме

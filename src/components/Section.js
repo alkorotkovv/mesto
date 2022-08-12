@@ -1,8 +1,7 @@
 //Класс Секшен
 export class Section {
-  constructor({items, renderer}, containerSelector)
+  constructor({renderer}, containerSelector)
   {
-    this._renderedItems = items;
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
   };
@@ -18,8 +17,8 @@ export class Section {
   };
 
   //Метод рендеринга
-  renderItems() {
-    this._renderedItems.forEach((item) => {
+  renderItems(items) {
+    items.forEach((item) => {
       this._renderer(item);
     });
   };

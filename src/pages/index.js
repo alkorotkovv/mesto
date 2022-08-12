@@ -41,11 +41,10 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-const CardsSection = new Section(
+const cardsSection = new Section(
   {
-    items: {},
     renderer: (item) => {
-      newCardsSection.addItem(generateCard(item));
+      cardsSection.addItem(generateCard(item));
     }
   },
   '.elements__cards'
@@ -59,9 +58,7 @@ function openPopupAvatar() {
 
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
-  const { name, job } = user.getUserInfo(); //деструктуризация
-  nameInput.value = name;  //заполняем поля ввода данными из профиля
-  jobInput.value = job;
+  popupEdit.setInputValues(user.getUserInfo());
   formEditValidator.hideErrors();  //скрываем ошибки при открытии
   formEditValidator.activateSaveButton();  //активируем кнопку при открытии
   popupEdit.open();
@@ -69,6 +66,8 @@ function openPopupEdit() {
 
 //Функция открытия попапа добавления карточки
 function openPopupAdd() {
+  formAddValidator.hideErrors();  //скрываем ошибки при открытии
+  formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   popupAdd.open();
 };
 
@@ -78,11 +77,14 @@ function handleSubmitFormAvatar(inputValuesObject) {
   api.setUserAvatar(inputValuesObject)
   .then(res => {
     user.setUserAvatar(res);
-    popupAvatar.renderLoading(false);
     popupAvatar.close();
+    formAvatarValidator.deactivateSaveButton(); //делаем кнопку неактивной
   })
   .catch(err => {
     console.log(err); // "Что-то пошло не так: ..."
+  })
+  .finally(res => {
+    popupAvatar.renderLoading(false);
   })
 };
 
@@ -92,11 +94,13 @@ function handleSubmitFormEdit(inputValuesObject) {
   api.setUserInfo(inputValuesObject)
   .then(res => {
     user.setUserInfo(res);
-    popupEdit.renderLoading(false);
     popupEdit.close();
   })
   .catch(err => {
     console.log(err); // "Что-то пошло не так: ..."
+  })
+  .finally(res => {
+    popupEdit.renderLoading(false);
   })
 };
 
@@ -105,13 +109,15 @@ function handleSubmitFormAdd(inputValuesObject) {
   popupAdd.renderLoading(true);
   api.addCard(inputValuesObject)
   .then(res => {
-    CardsSection.addItem(generateCard(res));
-    popupAdd.renderLoading(false);
+    cardsSection.renderItems([res]);  //передаем именно массив из одного элемента - объект с данными одной карточки
+    //cardsSection.addItem(generateCard(res));
     popupAdd.close();
-    formAddValidator.deactivateSaveButton(); //делаем кнопку неактивной
   })
   .catch(err => {
     console.log(err); // "Что-то пошло не так: ..."
+  })
+  .finally(res => {
+    popupAdd.renderLoading(false);
   })
 };
 
@@ -155,22 +161,6 @@ function generateCard(cardData) {
   return card.createCardElement();
 };
 
-//Функция инициализации первых карточек
-function initCards() {
-  api.getInitialCards()
-  .then(res => {
-    res.reverse();  //переворачиваем массив карточек, тк выводятся в обратном порядке
-    CardsSection.clear();
-    res.forEach((item) => {
-      CardsSection.addItem(generateCard(item));
-    })
-  })
-  .catch((err) => {
-    console.log(err); // "Что-то пошло не так: ..."
-  })
-};
-
-
 
 
 //Слушатель для кнопки редактировать профиль
@@ -181,19 +171,13 @@ buttonProfileAdd.addEventListener('click', openPopupAdd);
 buttonAvatarEdit.addEventListener('click', openPopupAvatar);
 
 
-
-//Заполнение информации о юзере данными с сервера
-api.getUserInfo()
-.then(res => {
-  user.setUserInfo(res);
-  user.setUserAvatar(res);
-  //Создаем карточки по умолчанию
-  initCards();
+//Получение нужных данных и их отображение
+Promise.all([api.getUserInfo(), api.getInitialCards() ])
+.then(([userInfo, initialCards]) => {
+  user.setUserInfo(userInfo);
+  user.setUserAvatar(userInfo);cardsSection.clear();           //очищаем контейнер с карточками
+  cardsSection.renderItems(initialCards.reverse());     //переворачиваем массив карточек, тк выводятся в обратном порядке и отрисовываем их
 })
-.catch(err => {
-  console.log(err); // "Что-то пошло не так: ..."
+.catch((err) => {
+  console.log(err);
 })
-
-
-
-

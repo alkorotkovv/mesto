@@ -7,15 +7,21 @@ export class PopupWithForm extends Popup {
     super(popupSelector);
     this._formSubmitHandler = formSubmitHandler;
     this._form = this._popupElement.querySelector('.form');
-    this._inputs = Array.from(this._form.querySelectorAll('.form__input'));
-    this._originalSubmitText = this._popupElement.querySelector('.form__save-button').textContent;
+    this._inputList = Array.from(this._form.querySelectorAll('.form__input'));
+    this._buttonSave = this._popupElement.querySelector('.form__save-button');
+    this._originalSubmitText = this._buttonSave.textContent;
   };
 
   //Метод, возвращающий объект со значениями инпутов
   _getInputValues() {
     const object = {};
-    this._inputs.forEach((input) => object[input.name] = input.value);
+    this._inputList.forEach((input) => object[input.name] = input.value);
     return object;
+  };
+
+  //Метод заполняющий инпуты данными из объекта по атрибуту `name` этих инпутов
+  setInputValues(data) {
+    this._inputList.forEach((input) => input.value = data[input.name]);
   };
 
   //Метод устанавливающий слушатели
@@ -36,9 +42,9 @@ export class PopupWithForm extends Popup {
   //Метод для визуального отображения процесса загрузки во время обмена данных с сервером
   renderLoading(isLoading) {
     if(isLoading)
-      this._popupElement.querySelector('.form__save-button').textContent = "Сохранение...";
+      this._buttonSave.textContent = "Сохранение...";
     else
-      this._popupElement.querySelector('.form__save-button').textContent = this._originalSubmitText;
+      this._buttonSave.textContent = this._originalSubmitText;
   }
 
 }

@@ -3,7 +3,7 @@ export class Api {
   constructor(options)
   {
     this._baseUrl = options.baseUrl;
-    this._authorization = options.headers.authorization;
+    this._headers = options.headers;
   };
 
   //Метод реакция на результат запроса
@@ -18,9 +18,7 @@ export class Api {
   getUserInfo() {
     return fetch(this._baseUrl + 'users/me', {
     method: 'GET',
-    headers: {
-      authorization: this._authorization
-      }
+    headers: this._headers
     })
     .then(res => this._checkResult(res))
   };
@@ -29,9 +27,7 @@ export class Api {
   getInitialCards() {
     return fetch(this._baseUrl + 'cards', {
       method: 'GET',
-      headers: {
-        authorization: this._authorization
-      }
+      headers: this._headers
     })
     .then(res => this._checkResult(res))
   };
@@ -40,10 +36,7 @@ export class Api {
   setUserInfo(inputValuesObject) {
     return fetch(this._baseUrl + 'users/me', {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: `${inputValuesObject.name}`,
         about: `${inputValuesObject.job}`
@@ -56,10 +49,7 @@ export class Api {
   addCard(cardData) {
     return fetch(this._baseUrl + 'cards', {
       method: 'POST',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: `${cardData.place}`,
         link: `${cardData.url}`
@@ -72,10 +62,7 @@ export class Api {
   deleteCard(cardData) {
     return fetch(this._baseUrl + 'cards/' + cardData._id, {
       method: 'DELETE',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
     })
     .then(res => this._checkResult(res))
   };
@@ -85,10 +72,7 @@ export class Api {
     let method = cardData._userLiked ? 'DELETE':'PUT';
     return fetch(this._baseUrl + 'cards/' + cardData._id + '/likes', {
       method: method,
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
     })
     .then(res => this._checkResult(res))
   };
@@ -97,10 +81,7 @@ export class Api {
   setUserAvatar(avatar) {
     return fetch(this._baseUrl + 'users/me/avatar', {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: `${avatar.avatarurl}`
       })
