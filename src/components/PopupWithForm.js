@@ -18,7 +18,7 @@ export class PopupWithForm extends Popup {
     return object;
   };
 
-
+  //Метод устанавливающий слушатели
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
@@ -27,12 +27,14 @@ export class PopupWithForm extends Popup {
     });
   };
 
+  //Метод закрытия попапа
   close() {
     super.close();
     this._form.reset();  //Очищаем поля формы
   };
 
-  renderLoading(isLoading, text) {
+  //Метод для визуального отображения процесса загрузки во время обмена данных с сервером
+  renderLoading(isLoading) {
     if(isLoading)
       this._popupElement.querySelector('.form__save-button').textContent = "Сохранение...";
     else

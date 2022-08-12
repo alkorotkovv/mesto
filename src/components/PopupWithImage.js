@@ -10,11 +10,11 @@ export class PopupWithImage extends Popup {
   };
 
   //Метод открытия попапа с заполнением ссылки и подписи
-  open(name, link) {
+  open(card) {
     super.open();
-    this._popupCardImage.src = link;
-    this._popupCardImage.alt = 'попап ' + name;
-    this._popupCardCaption.textContent = name;
+    this._popupCardImage.src = card._link;
+    this._popupCardImage.alt = 'попап ' + card._name;
+    this._popupCardCaption.textContent = card._name;
   };
 
 }

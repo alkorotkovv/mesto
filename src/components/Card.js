@@ -6,8 +6,8 @@ export class Card {
     this._link = data.link;
     this._id = data._id;
     this._owner = data.owner;
-    this._user = user;
     this._likes = data.likes;
+    this._user = user;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -26,7 +26,7 @@ export class Card {
   }
 
   //Метод переключатель-обновлятель лайков
-  _toggleLike(array) {
+  toggleLike(array) {
     this._cardCountElement.textContent = array.length;
     this._cardLikeElement.classList.toggle('card__like_active');
     this._userLiked = !this._userLiked;
@@ -39,7 +39,7 @@ export class Card {
   };
 
   //Метод удаления карточки
-  _deleteCard() {
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null; //очищаем ссылку на DOM элемент
   };
@@ -67,11 +67,10 @@ export class Card {
     this._cardLikeElement = this._cardElement.querySelector('.card__like');
     this._cardCountElement = this._cardElement.querySelector('.card__count');
     this._cardDeleteElement = this._cardElement.querySelector('.card__delete');
-
-    this._cardCountElement.textContent = this._likes.length;
     this._cardNameElement.textContent = this._name;
     this._cardImageElement.src = this._link;
     this._cardImageElement.alt = 'фотография ' + this._name;
+    this._cardCountElement.textContent = this._likes.length;
     this._initTrash();
     this._initLike();
     this._setEventListeners();

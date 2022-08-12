@@ -6,6 +6,14 @@ export class Api {
     this._authorization = options.headers.authorization;
   };
 
+  //Метод реакция на результат запроса
+  _checkResult(res) {
+    if (res.ok)
+        return res.json()
+      else
+        return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  };
+
   //Метод получения данных пользователя
   getUserInfo() {
     return fetch(this._baseUrl + 'users/me', {
@@ -14,15 +22,7 @@ export class Api {
       authorization: this._authorization
       }
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод получения инициализируемых карточек
@@ -33,15 +33,7 @@ export class Api {
         authorization: this._authorization
       }
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод изменения данных пользователя
@@ -57,15 +49,7 @@ export class Api {
         about: `${inputValuesObject.job}`
       })
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод добавления новой карточки
@@ -81,15 +65,7 @@ export class Api {
         link: `${cardData.url}`
       })
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод удаления карточки
@@ -101,15 +77,7 @@ export class Api {
         'Content-Type': 'application/json'
       },
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод установки/снятия лайка
@@ -122,15 +90,7 @@ export class Api {
         'Content-Type': 'application/json'
       },
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
 
   //Метод установки аватара пользователя
@@ -145,15 +105,9 @@ export class Api {
         avatar: `${avatar.url}`
       })
     })
-    .then(res => {
-      if (res.ok)
-        return res.json()
-      }
-    )
-    .then(result => {
-      //console.log(result);
-      return result;
-    })
+    .then(res => this._checkResult(res))
   };
+
+
 
 }

@@ -13,14 +13,12 @@ export class PopupWithQuestion extends Popup {
   open(card) {
     super.open();
     this._card = card;
-    this._cardID = card._id;
-    this._cardElement = card._cardElement;
   };
 
+  //Метод устанавливающий слушатели
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener('submit', (evt) => {
-      console.log("да")
       evt.preventDefault(); //отменяем стандартную отправку формы
       this._formSubmitHandler(this._card);
     });
