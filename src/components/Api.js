@@ -102,7 +102,7 @@ export class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        avatar: `${avatar.url}`
+        avatar: `${avatar.avatarurl}`
       })
     })
     .then(res => this._checkResult(res))
